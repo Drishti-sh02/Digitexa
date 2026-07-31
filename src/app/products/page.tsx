@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingCart, Download, Check, Star, Filter, Zap } from "lucide-react";
+import { Search, ShoppingCart, Download, Check, Star, Filter, Zap, Shield } from "lucide-react";
 import Link from "next/link";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
@@ -200,6 +200,26 @@ export default function MarketplacePage() {
             No products found matching your criteria.
           </div>
         )}
+
+        {/* Disclaimer Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-24 mb-10 w-full bg-[#F8F7F4] rounded-[16px] border border-gray-200 shadow-sm p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start"
+          style={{ fontFamily: "'Inter', sans-serif" }}
+        >
+          <div className="flex-shrink-0 mt-1">
+            <Shield className="w-8 h-8 text-gray-700" />
+          </div>
+          <div className="flex-1 text-left">
+            <h3 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Disclaimer</h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              All products available on this store are digital products and will be delivered electronically after successful payment. No physical items will be shipped. Please review the product description carefully before purchasing. Due to the nature of digital products, purchases are generally non-refundable except where required by applicable law. Unauthorized copying, redistribution, resale, or sharing of any purchased content is strictly prohibited.
+            </p>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
