@@ -83,7 +83,7 @@ export default function BillingPage() {
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm text-subtext mb-2">Card Number</label>
@@ -105,7 +105,7 @@ export default function BillingPage() {
                 </div>
               </div>
 
-              <button 
+              <button
                 type="submit"
                 className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent py-4 rounded-xl text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
               >
@@ -117,7 +117,7 @@ export default function BillingPage() {
           <div className="lg:col-span-1">
             <div className="glass p-8 rounded-3xl border border-white/10 sticky top-32">
               <h3 className="text-2xl font-bold mb-6 border-b border-white/10 pb-4">Order Summary</h3>
-              
+
               <div className="space-y-4 mb-6 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
                 {cartItems.map(item => (
                   <div key={item.id} className="flex justify-between items-center text-sm">
@@ -126,7 +126,7 @@ export default function BillingPage() {
                   </div>
                 ))}
               </div>
-              
+
               <div className="flex justify-between items-center text-xl font-bold border-t border-white/10 pt-6">
                 <span>TOTAL</span>
                 <span className="text-gradient">${total.toFixed(2)}</span>
@@ -139,36 +139,36 @@ export default function BillingPage() {
       {/* Success Popup Overlay */}
       <AnimatePresence>
         {isSuccess && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-[#050816]/90 backdrop-blur-sm px-6"
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.2, opacity: 0 }}
               animate={{ scale: [1.05, 1], opacity: 1 }}
               transition={{ duration: 0.7, type: "spring", bounce: 0.4 }}
               className="glass max-w-md w-full p-10 rounded-[2rem] border border-white/20 shadow-[0_0_50px_rgba(110,86,207,0.3)] text-center relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent"></div>
-              
+
               <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6 border border-green-500/50">
                 <CheckCircle2 className="w-10 h-10 text-green-400" />
               </div>
-              
-              <h2 className="text-3xl font-bold text-white mb-4">Payment Successful!</h2>
+
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 whitespace-nowrap drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]">Thankyou For Purchasing!</h2>
               <p className="text-subtext mb-8">
-                Thank you for your purchase. Your premium digital products are now ready for download.
+                Payment successful. Your premium digital products are ready for download.
               </p>
-              
+
               <div className="flex flex-col gap-3">
-                <button 
+                <button
                   onClick={handleComplete}
                   className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent py-3 rounded-xl text-white font-medium hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
                 >
                   Go to Downloads <Download className="w-4 h-4" />
                 </button>
-                <Link 
+                <Link
                   href="/products"
                   onClick={checkout}
                   className="w-full flex items-center justify-center py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-all"
