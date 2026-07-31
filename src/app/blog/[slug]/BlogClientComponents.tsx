@@ -40,13 +40,6 @@ export default function BlogClientComponents({ blog, prevArticle, nextArticle }:
           </Link>
         </div>
         <div className="flex justify-end pr-4">
-          <button 
-            onClick={handleCopyLink}
-            className="inline-flex items-center gap-2 text-white bg-gradient-to-r from-primary to-accent px-4 py-2 md:px-6 md:py-2.5 rounded-full shadow-[0_0_20px_rgba(109,94,247,0.4)] hover:shadow-[0_0_30px_rgba(109,94,247,0.6)] hover:scale-105 transition-all font-bold tracking-wide"
-          >
-            <Share2 className="w-4 h-4" />
-            <span className="text-sm uppercase tracking-wider hidden md:inline">Copy Link</span>
-          </button>
         </div>
       </div>
 
