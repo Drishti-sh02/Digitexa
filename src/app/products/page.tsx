@@ -31,20 +31,7 @@ export default function MarketplacePage() {
 
   return (
     <div className="bg-[#050816] min-h-screen text-white pt-10 pb-24 relative">
-      {/* Floating Cart Button */}
-      <Link href="/cart">
-        <motion.div 
-          className="fixed bottom-10 right-10 z-50 w-16 h-16 rounded-full bg-primary/90 backdrop-blur-md flex items-center justify-center shadow-[0_0_30px_rgba(110,86,207,0.5)] cursor-pointer hover:scale-110 transition-transform border border-white/20"
-          whileHover={{ y: -5 }}
-        >
-          <ShoppingCart className="w-6 h-6 text-white" />
-          {cartItems.length > 0 && (
-            <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-red-500 flex items-center justify-center text-xs font-bold border-2 border-[#050816]">
-              {cartItems.length}
-            </div>
-          )}
-        </motion.div>
-      </Link>
+
 
       <div className="container mx-auto px-6 max-w-7xl">
         
