@@ -288,7 +288,7 @@ export default function ConsultationModal() {
                         <span className="text-xs text-subtext uppercase tracking-widest font-bold">Need immediate assistance?</span>
                         <div className="flex flex-wrap items-center justify-center gap-6">
                           <a href="mailto:digitexatech@gmail.com" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Mail className="w-4 h-4" /> digitexatech@gmail.com</a>
-                          <a href="tel:+919971123820" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Phone className="w-4 h-4" /> 9971123820</a>
+                          <a href="tel:+919971123820" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Phone className="w-4 h-4" /> +91 9971123820</a>
                         </div>
                       </div>
                     </form>

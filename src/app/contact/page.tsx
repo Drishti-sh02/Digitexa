@@ -84,7 +84,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-subtext mb-1">Call Us</p>
-                    <a href="tel:+919971123820" className="text-lg font-medium text-white hover:text-accent transition-colors">9971123820</a>
+                    <a href="tel:+919971123820" className="text-lg font-medium text-white hover:text-accent transition-colors">+91 9971123820</a>
                   </div>
                 </div>
 

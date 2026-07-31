@@ -18,7 +18,7 @@ export default function FloatingContact() {
     {
       name: "WhatsApp",
       icon: <WhatsappIcon />,
-      href: "https://wa.me/9971123820",
+      href: "https://wa.me/919971123820",
       color: "bg-[#25D366] hover:bg-[#22c15e]",
     },
     {

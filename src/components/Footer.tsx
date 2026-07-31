@@ -34,7 +34,7 @@ export default function Footer() {
               Accelerating Brands Through Intelligent Digital Marketing. We blend creativity with data to drive measurable business growth globally.
             </p>
             <div className="flex items-center gap-4 mt-2">
-              <Link href="https://wa.me/9971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
+              <Link href="https://wa.me/919971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <WhatsappIcon />
               </Link>
               <Link href="mailto:digitexatech@gmail.com" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
@@ -88,7 +88,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col pt-2">
                   <span className="text-white font-medium text-sm mb-1">Phone</span>
-                  <span className="text-subtext text-sm">9971123820</span>
+                  <span className="text-subtext text-sm">+91 9971123820</span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
