@@ -7,6 +7,7 @@ interface CartContextType {
   cartItems: Product[];
   purchasedItemIds: string[];
   downloadItemIds: string[];
+  purchaseDates: Record<string, string>;
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
@@ -20,12 +21,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [purchasedItemIds, setPurchasedItemIds] = useState<string[]>([]);
   const [downloadItemIds, setDownloadItemIds] = useState<string[]>([]);
+  const [purchaseDates, setPurchaseDates] = useState<Record<string, string>>({});
 
   // Load from local storage on mount
   useEffect(() => {
     const storedCart = localStorage.getItem("cartItems");
     const storedPurchases = localStorage.getItem("purchasedItemIds");
     const storedDownloads = localStorage.getItem("downloadItemIds");
+    const storedPurchaseDates = localStorage.getItem("purchaseDates");
 
     if (storedCart) setCartItems(JSON.parse(storedCart));
     
@@ -41,6 +44,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const validPurchases = parsedPurchases.filter(id => parsedDownloads.includes(id));
       setPurchasedItemIds(validPurchases);
     }
+
+    if (storedPurchaseDates) {
+      setPurchaseDates(JSON.parse(storedPurchaseDates));
+    }
   }, []);
 
   // Sync to local storage
@@ -55,6 +62,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     localStorage.setItem("downloadItemIds", JSON.stringify(downloadItemIds));
   }, [downloadItemIds]);
+
+  useEffect(() => {
+    localStorage.setItem("purchaseDates", JSON.stringify(purchaseDates));
+  }, [purchaseDates]);
 
   const addToCart = (product: Product) => {
     if (!cartItems.find((p) => p.id === product.id) && !purchasedItemIds.includes(product.id)) {
@@ -75,8 +86,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const updatedPurchases = Array.from(new Set([...purchasedItemIds, ...newPurchaseIds]));
     const updatedDownloads = Array.from(new Set([...downloadItemIds, ...newPurchaseIds]));
     
+    const newDates = { ...purchaseDates };
+    const today = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    newPurchaseIds.forEach((id) => {
+      if (!newDates[id]) newDates[id] = today;
+    });
+
     setPurchasedItemIds(updatedPurchases);
     setDownloadItemIds(updatedDownloads);
+    setPurchaseDates(newDates);
     setCartItems([]);
   };
 
@@ -91,6 +109,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         cartItems,
         purchasedItemIds,
         downloadItemIds,
+        purchaseDates,
         addToCart,
         removeFromCart,
         clearCart,

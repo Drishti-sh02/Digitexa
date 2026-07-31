@@ -8,7 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { products } from "@/data/products";
 
 export default function DownloadsPage() {
-  const { downloadItemIds, removeDownload } = useCart();
+  const { downloadItemIds, removeDownload, purchaseDates } = useCart();
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   const myDownloads = products.filter(p => downloadItemIds.includes(p.id));
@@ -59,30 +59,31 @@ export default function DownloadsPage() {
                     <h3 className="text-xl font-bold mb-4">{product.title}</h3>
                     
                     <div className="space-y-2 mb-8 mt-auto">
-                      <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                        <span className="text-subtext flex items-center gap-2"><Calendar className="w-4 h-4" /> Purchased</span>
-                        <span className="text-white">Just now</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                        <span className="text-subtext flex items-center gap-2"><HardDrive className="w-4 h-4" /> File Size</span>
-                        <span className="text-white">{product.fileSize}</span>
-                      </div>
                       <div className="flex justify-between items-center text-sm">
-                        <span className="text-subtext flex items-center gap-2"><Download className="w-4 h-4" /> Version</span>
-                        <span className="text-white">{product.version}</span>
+                        <span className="text-subtext flex items-center gap-2"><Calendar className="w-4 h-4" /> Purchased</span>
+                        <span className="text-white">{purchaseDates[product.id] || "Just now"}</span>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-4 gap-3">
-                      <button 
-                        onClick={() => {
-                          // Dummy download action
-                          alert(`Starting download for ${product.title}...`);
-                        }}
-                        className="col-span-3 flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent py-3 rounded-xl text-white font-medium hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
-                      >
-                        <Download className="w-5 h-5" /> Download
-                      </button>
+                      {product.downloadUrl ? (
+                        <a 
+                          href={product.downloadUrl}
+                          download
+                          className="col-span-3 flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent py-3 rounded-xl text-white font-medium hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
+                        >
+                          <Download className="w-5 h-5" /> Download
+                        </a>
+                      ) : (
+                        <button 
+                          onClick={() => {
+                            alert(`Starting download for ${product.title}... (No actual file linked yet)`);
+                          }}
+                          className="col-span-3 flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent py-3 rounded-xl text-white font-medium hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
+                        >
+                          <Download className="w-5 h-5" /> Download
+                        </button>
+                      )}
                       <button 
                         onClick={() => setDeleteConfirm(product.id)}
                         className="col-span-1 flex items-center justify-center py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-red-500/20 text-white/50 hover:text-red-500 transition-colors"

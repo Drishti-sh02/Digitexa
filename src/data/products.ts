@@ -11,6 +11,7 @@ export interface Product {
   version: string;
   fileSize: string;
   createdAt: string;
+  downloadUrl?: string;
 }
 
 export const products: Product[] = [
@@ -97,5 +98,20 @@ export const products: Product[] = [
     version: "4.0",
     fileSize: "45 MB",
     createdAt: "2024-03-22T00:00:00Z"
+  },
+  {
+    id: "secret-of-the-universe",
+    title: "The Secret Of The Universe",
+    description: "An eBook exploring the infinite mysteries of space, time, stars, galaxies, and beyond. Includes a downloadable PDF upon successful payment.",
+    category: "eBook",
+    price: 14,
+    rating: 5,
+    downloads: "500+",
+    image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop",
+    badge: "New",
+    version: "1.0",
+    fileSize: "15 MB",
+    createdAt: "2026-07-31T00:00:00Z",
+    downloadUrl: "/The_Secret_Of_The_Universe.pdf"
   }
 ];
