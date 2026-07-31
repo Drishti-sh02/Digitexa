@@ -207,15 +207,15 @@ export default function MarketplacePage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-24 mb-10 w-full bg-[#F8F7F4] rounded-[16px] border border-gray-200 shadow-sm p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start"
-          style={{ fontFamily: "'Inter', sans-serif" }}
+          className="mt-24 mb-10 w-full glass rounded-[2rem] border border-white/10 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start shadow-xl relative overflow-hidden"
         >
-          <div className="flex-shrink-0 mt-1">
-            <Shield className="w-8 h-8 text-gray-700" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/5 to-white/10"></div>
+          <div className="flex-shrink-0 mt-1 w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+            <Shield className="w-7 h-7 text-red-400" />
           </div>
           <div className="flex-1 text-left">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2 tracking-tight">Disclaimer</h3>
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+            <h3 className="text-xl font-heading font-bold text-white mb-3">Disclaimer</h3>
+            <p className="text-sm md:text-base text-subtext leading-relaxed">
               All products available on this store are digital products and will be delivered electronically after successful payment. No physical items will be shipped. Please review the product description carefully before purchasing. Due to the nature of digital products, purchases are generally non-refundable except where required by applicable law. Unauthorized copying, redistribution, resale, or sharing of any purchased content is strictly prohibited.
             </p>
           </div>
