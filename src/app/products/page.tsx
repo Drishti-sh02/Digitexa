@@ -141,7 +141,7 @@ export default function MarketplacePage() {
                         <span className="text-sm font-medium text-white">{product.rating}</span>
                         <span className="text-xs text-white/50 ml-1">({product.downloads})</span>
                       </div>
-                      <div className="text-xl font-bold text-white">${product.price}</div>
+                      <div className="text-xl font-bold text-white">€{product.price}</div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 mt-auto relative z-20">

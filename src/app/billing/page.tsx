@@ -122,14 +122,14 @@ export default function BillingPage() {
                 {cartItems.map(item => (
                   <div key={item.id} className="flex justify-between items-center text-sm">
                     <span className="text-white/80 line-clamp-1 mr-4">{item.title}</span>
-                    <span className="text-white font-medium">${item.price}</span>
+                    <span className="text-white font-medium">€{item.price}</span>
                   </div>
                 ))}
               </div>
 
               <div className="flex justify-between items-center text-xl font-bold border-t border-white/10 pt-6">
                 <span>TOTAL</span>
-                <span className="text-gradient">${total.toFixed(2)}</span>
+                <span className="text-gradient">€{total.toFixed(2)}</span>
               </div>
             </div>
           </div>

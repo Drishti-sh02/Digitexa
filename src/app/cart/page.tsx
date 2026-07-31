@@ -47,7 +47,7 @@ export default function CartPage() {
                   <div className="flex-grow">
                     <div className="text-xs text-primary mb-1">{item.category}</div>
                     <h3 className="text-lg font-bold mb-1">{item.title}</h3>
-                    <div className="text-xl font-bold">${item.price}</div>
+                    <div className="text-xl font-bold">€{item.price}</div>
                   </div>
                   <button 
                     onClick={() => removeFromCart(item.id)}
@@ -66,17 +66,17 @@ export default function CartPage() {
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-subtext">
                     <span>Subtotal</span>
-                    <span className="text-white">${subtotal.toFixed(2)}</span>
+                    <span className="text-white">€{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-subtext">
                     <span>Tax (5%)</span>
-                    <span className="text-white">${tax.toFixed(2)}</span>
+                    <span className="text-white">€{tax.toFixed(2)}</span>
                   </div>
                 </div>
                 
                 <div className="flex justify-between items-center text-xl font-bold border-t border-white/10 pt-6 mb-8">
                   <span>Total</span>
-                  <span className="text-gradient">${total.toFixed(2)}</span>
+                  <span className="text-gradient">€{total.toFixed(2)}</span>
                 </div>
 
                 <Link 
