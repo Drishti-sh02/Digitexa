@@ -68,12 +68,7 @@ export default function BillingPage() {
                   </div>
                   <div>
                     <label className="block text-sm text-subtext mb-2">Country</label>
-                    <select className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none">
-                      <option>United States</option>
-                      <option>United Kingdom</option>
-                      <option>Canada</option>
-                      <option>Australia</option>
-                    </select>
+                    <input required type="text" placeholder="e.g. United States" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none placeholder-white/30" />
                   </div>
                 </div>
               </div>

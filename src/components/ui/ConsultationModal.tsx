@@ -75,22 +75,22 @@ export default function ConsultationModal() {
     if (validate()) {
       setIsSubmitting(true);
       
-      const text = `*New Consultation Request*\n\n` +
-        `*Name:* ${formState.name}\n` +
-        `*Email:* ${formState.email}\n` +
-        `*Phone:* ${formState.phone}\n` +
-        `*Company:* ${formState.company || 'N/A'}\n` +
-        `*Website:* ${formState.website || 'N/A'}\n` +
-        `*Service:* ${formState.service || 'N/A'}\n` +
-        `*Industry:* ${formState.industry || 'N/A'}\n` +
-        `*Budget:* ${formState.budget || 'N/A'}\n` +
-        `*Date:* ${formState.date}\n` +
-        `*Time:* ${formState.time}\n\n` +
-        `*Project Details:*\n${formState.project}`;
+      const text = `New Consultation Request\n\n` +
+        `Name: ${formState.name}\n` +
+        `Email: ${formState.email}\n` +
+        `Phone: ${formState.phone}\n` +
+        `Company: ${formState.company || 'N/A'}\n` +
+        `Website: ${formState.website || 'N/A'}\n` +
+        `Service: ${formState.service || 'N/A'}\n` +
+        `Industry: ${formState.industry || 'N/A'}\n` +
+        `Budget: ${formState.budget || 'N/A'}\n` +
+        `Date: ${formState.date}\n` +
+        `Time: ${formState.time}\n\n` +
+        `Project Details:\n${formState.project}`;
 
       setTimeout(() => {
         setIsSubmitting(false);
-        window.open(`https://wa.me/919971123820?text=${encodeURIComponent(text)}`, '_blank');
+        window.location.href = `mailto:digitexatech@gmail.com?subject=${encodeURIComponent('New Consultation Request from ' + formState.name)}&body=${encodeURIComponent(text)}`;
         setIsSuccess(true);
       }, 500);
     }

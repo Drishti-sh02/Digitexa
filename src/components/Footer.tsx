@@ -61,11 +61,11 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-heading font-bold mb-8 text-lg">Services</h4>
             <ul className="flex flex-col gap-4">
-              <li><Link href="/services/seo" className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> SEO Optimization</Link></li>
-              <li><Link href="/services/ppc" className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Performance Marketing</Link></li>
-              <li><Link href="/services/social" className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Social Media Management</Link></li>
-              <li><Link href="/services/web" className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Web Development</Link></li>
-              <li><Link href="/services/branding" className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Branding & Design</Link></li>
+              <li><span className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group cursor-default"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> SEO Optimization</span></li>
+              <li><span className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group cursor-default"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Performance Marketing</span></li>
+              <li><span className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group cursor-default"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Social Media Management</span></li>
+              <li><span className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group cursor-default"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Web Development</span></li>
+              <li><span className="text-subtext hover:text-primary transition-colors text-sm flex items-center gap-2 group cursor-default"><ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" /> Branding & Design</span></li>
             </ul>
           </div>
 
