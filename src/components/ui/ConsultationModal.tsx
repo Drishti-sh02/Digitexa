@@ -306,9 +306,7 @@ export default function ConsultationModal() {
                     <p className="text-subtext mb-8 max-w-sm mx-auto">
                       Your consultation request has been successfully submitted. Our team will review your details and contact you within 24 business hours to confirm your meeting.
                     </p>
-                    <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-10 text-sm text-white/80">
-                      <Mail className="w-4 h-4 text-primary" /> Confirmation has been sent to your email.
-                    </div>
+
                     <div className="flex flex-col sm:flex-row w-full gap-4 max-w-sm">
                       <button onClick={closeModal} className="flex-1 py-3 rounded-[12px] glass border border-white/10 text-white font-medium hover:bg-white/10 transition-colors">
                         Return to Website
