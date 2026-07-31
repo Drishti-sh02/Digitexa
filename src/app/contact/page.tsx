@@ -74,7 +74,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-subtext mb-1">Email Us</p>
-                    <a href="mailto:hello@digitexa.com" className="text-lg font-medium text-white hover:text-accent transition-colors">hello@digitexa.com</a>
+                    <a href="mailto:digitexatech@gmail.com" className="text-lg font-medium text-white hover:text-accent transition-colors">digitexatech@gmail.com</a>
                   </div>
                 </div>
 
@@ -84,7 +84,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-subtext mb-1">Call Us</p>
-                    <a href="tel:+1234567890" className="text-lg font-medium text-white hover:text-accent transition-colors">+1 (234) 567-890</a>
+                    <a href="tel:+919971123820" className="text-lg font-medium text-white hover:text-accent transition-colors">9971123820</a>
                   </div>
                 </div>
 
@@ -94,7 +94,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-subtext mb-1">Visit Us</p>
-                    <p className="text-lg font-medium text-white">123 Innovation Drive,<br/>Tech City, TC 10010</p>
+                    <p className="text-lg font-medium text-white">43 NEAR MOTHER SCHOOL, ADHCHINI , MMTC/STC Colony, SOUTH DELHI, DELHI, 110017.</p>
                   </div>
                 </div>
               </div>
@@ -132,12 +132,25 @@ export default function ContactPage() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
                     className="relative z-10 flex flex-col gap-6" 
-                    onSubmit={(e) => { e.preventDefault(); setIsSubmitted(true); }}
+                    onSubmit={(e) => { 
+                      e.preventDefault(); 
+                      const formData = new FormData(e.currentTarget);
+                      const name = formData.get('name');
+                      const email = formData.get('email');
+                      const company = formData.get('company');
+                      const budget = formData.get('budget') || 'Not specified';
+                      const details = formData.get('details');
+                      
+                      const text = `Hi Digitexa,\n\nMy name is ${name} (${email}).\nCompany: ${company}\nBudget: ${budget}\n\nProject Details:\n${details}`;
+                      window.open(`https://wa.me/919971123820?text=${encodeURIComponent(text)}`, '_blank');
+                      setIsSubmitted(true); 
+                    }}
                   >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-white/80 ml-2">Full Name</label>
                     <input 
+                      name="name"
                       type="text" 
                       required
                       placeholder="John Doe" 
@@ -147,6 +160,7 @@ export default function ContactPage() {
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-white/80 ml-2">Email Address</label>
                     <input 
+                      name="email"
                       type="email" 
                       required
                       placeholder="john@example.com" 
@@ -159,6 +173,7 @@ export default function ContactPage() {
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-white/80 ml-2">Company / Organization</label>
                     <input 
+                      name="company"
                       type="text" 
                       required
                       placeholder="Acme Corp" 
@@ -168,6 +183,7 @@ export default function ContactPage() {
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-white/80 ml-2">Estimated Budget <span className="text-white/40 font-normal">(Optional)</span></label>
                     <select 
+                      name="budget"
                       defaultValue=""
                       className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 focus:border-primary focus:bg-white/10 focus:outline-none transition-all text-white/80 appearance-none cursor-pointer"
                     >
@@ -183,6 +199,7 @@ export default function ContactPage() {
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-medium text-white/80 ml-2">Project Details</label>
                   <textarea 
+                    name="details"
                     placeholder="Tell us about your goals, timeline, and what you're looking to achieve..." 
                     rows={5}
                     required

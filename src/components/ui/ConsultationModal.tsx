@@ -74,11 +74,25 @@ export default function ConsultationModal() {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      // Mock API call
+      
+      const text = `*New Consultation Request*\n\n` +
+        `*Name:* ${formState.name}\n` +
+        `*Email:* ${formState.email}\n` +
+        `*Phone:* ${formState.phone}\n` +
+        `*Company:* ${formState.company || 'N/A'}\n` +
+        `*Website:* ${formState.website || 'N/A'}\n` +
+        `*Service:* ${formState.service || 'N/A'}\n` +
+        `*Industry:* ${formState.industry || 'N/A'}\n` +
+        `*Budget:* ${formState.budget || 'N/A'}\n` +
+        `*Date:* ${formState.date}\n` +
+        `*Time:* ${formState.time}\n\n` +
+        `*Project Details:*\n${formState.project}`;
+
       setTimeout(() => {
         setIsSubmitting(false);
+        window.open(`https://wa.me/919971123820?text=${encodeURIComponent(text)}`, '_blank');
         setIsSuccess(true);
-      }, 1500);
+      }, 500);
     }
   };
 
@@ -273,8 +287,8 @@ export default function ConsultationModal() {
                       <div className="pt-6 mt-6 border-t border-white/10 flex flex-col items-center justify-center gap-2">
                         <span className="text-xs text-subtext uppercase tracking-widest font-bold">Need immediate assistance?</span>
                         <div className="flex flex-wrap items-center justify-center gap-6">
-                          <a href="mailto:hello@digitexa.com" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Mail className="w-4 h-4" /> hello@digitexa.com</a>
-                          <a href="tel:+1234567890" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Phone className="w-4 h-4" /> +1 234 567 890</a>
+                          <a href="mailto:digitexatech@gmail.com" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Mail className="w-4 h-4" /> digitexatech@gmail.com</a>
+                          <a href="tel:+919971123820" className="flex items-center gap-2 text-sm text-white/90 hover:text-primary transition-colors"><Phone className="w-4 h-4" /> 9971123820</a>
                         </div>
                       </div>
                     </form>

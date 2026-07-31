@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { ConsultationModalProvider } from "@/context/ConsultationModalContext";
 import ConsultationModal from "@/components/ui/ConsultationModal";
 import { CartProvider } from "@/context/CartContext";
+import FloatingContact from "@/components/ui/FloatingContact";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Digitexa",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/Logo.png",
         width: 1200,
         height: 630,
         alt: "Digitexa Banner",
@@ -59,6 +60,7 @@ export default function RootLayout({
               </main>
               <Footer />
               <ConsultationModal />
+              <FloatingContact />
             </SmoothScroll>
           </ConsultationModalProvider>
         </CartProvider>

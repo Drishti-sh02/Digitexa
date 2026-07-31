@@ -34,13 +34,13 @@ export default function Footer() {
               Accelerating Brands Through Intelligent Digital Marketing. We blend creativity with data to drive measurable business growth globally.
             </p>
             <div className="flex items-center gap-4 mt-2">
-              <Link href="https://wa.me/15551234567" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
+              <Link href="https://wa.me/9971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <WhatsappIcon />
               </Link>
-              <Link href="mailto:hello@digitexa.com" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
+              <Link href="mailto:digitexatech@gmail.com" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <Mail size={18} />
               </Link>
-              <Link href="tel:+15551234567" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
+              <Link href="tel:+919971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <Phone size={18} />
               </Link>
             </div>
@@ -79,7 +79,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col pt-2">
                   <span className="text-white font-medium text-sm mb-1">Headquarters</span>
-                  <span className="text-subtext text-sm leading-relaxed">123 Innovation Drive, Tech District, NY 10001</span>
+                  <span className="text-subtext text-sm leading-relaxed">43 NEAR MOTHER SCHOOL, ADHCHINI , MMTC/STC Colony, SOUTH DELHI, DELHI, 110017.</span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -88,7 +88,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col pt-2">
                   <span className="text-white font-medium text-sm mb-1">Phone</span>
-                  <span className="text-subtext text-sm">+1 (555) 123-4567</span>
+                  <span className="text-subtext text-sm">9971123820</span>
                 </div>
               </li>
               <li className="flex items-start gap-4">
@@ -97,7 +97,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col pt-2">
                   <span className="text-white font-medium text-sm mb-1">Email</span>
-                  <span className="text-subtext text-sm">hello@digitexa.com</span>
+                  <span className="text-subtext text-sm">digitexatech@gmail.com</span>
                 </div>
               </li>
             </ul>

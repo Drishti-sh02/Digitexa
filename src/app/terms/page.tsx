@@ -100,7 +100,7 @@ export default function TermsOfServicePage() {
 
             <section>
               <h2 className="text-lg font-bold text-white mb-4">7. Contact Us</h2>
-              <p className="text-subtext">If you have any questions or comments about these Terms, you may email us at <strong>hello@digitexa.com</strong>.</p>
+              <p className="text-subtext">If you have any questions or comments about these Terms, you may email us at <strong>digitexatech@gmail.com</strong>.</p>
             </section>
             
           </div>
