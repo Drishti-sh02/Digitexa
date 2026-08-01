@@ -12,9 +12,10 @@ export default function ProductPage() {
   const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
   const selectedProduct = products.find(p => p.id === params.id);
 
-  const handleBuyNow = (product: Product) => {
+  const handleBuyNow = (e: React.MouseEvent, product: Product) => {
+    e.preventDefault();
+    e.stopPropagation();
     addToCart(product);
-    router.push("/cart");
   };
 
   if (!selectedProduct) return (
@@ -65,7 +66,12 @@ export default function ProductPage() {
                   <Check className="w-5 h-5" /> Already Purchased
                 </div>
                 <button 
-                  onClick={() => router.push("/downloads")}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    router.push("/downloads");
+                  }}
                   className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all text-lg"
                 >
                   Go to Downloads
@@ -74,7 +80,8 @@ export default function ProductPage() {
             ) : (
               <div className="flex flex-col gap-4 mt-8">
                 <button 
-                  onClick={() => handleBuyNow(selectedProduct)}
+                  type="button"
+                  onClick={(e) => handleBuyNow(e, selectedProduct)}
                   className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-xl hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
                 >
                   <Zap className="w-6 h-6" /> Buy Now
@@ -82,7 +89,10 @@ export default function ProductPage() {
                 
                 <div className="flex gap-4">
                   <button 
-                    onClick={() => {
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
                       if (cartItems.some(p => p.id === selectedProduct.id)) {
                         removeFromCart(selectedProduct.id);
                       } else {
@@ -99,7 +109,10 @@ export default function ProductPage() {
                   </button>
                   
                   <button 
-                    onClick={() => {
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
                       if (likedItemIds.includes(selectedProduct.id)) {
                         removeFromWishlist(selectedProduct.id);
                       } else {
