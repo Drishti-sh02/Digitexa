@@ -101,8 +101,8 @@ export const products: Product[] = [
   },
   {
     id: "secret-of-the-universe",
-    title: "The Secret Of The Universe",
-    description: "Explore the fascinating mysteries of space, stars, galaxies, black holes, and the origins of the universe in this beautifully designed educational eBook. Perfect for science enthusiasts, students, and curious readers.",
+    title: "The Secrets Of The Universe",
+    description: "Explore the fascinating mysteries of space, stars, galaxies, black holes, and the origins of the universe in this beautifully designed educational eBook. Perfect for science enthusiasts, students, and curious readers. Product type: eBook.",
     category: "eBook",
     price: 14,
     rating: 5,
@@ -117,7 +117,7 @@ export const products: Product[] = [
   {
     id: "wonders-of-earth-vol1",
     title: "Wonders Of Earth: Mountains And Volcanoes",
-    description: "Discover the incredible world of mountains and volcanoes through engaging explanations, stunning visuals, and fascinating geological facts in this premium educational eBook. Perfect for learners and nature lovers.",
+    description: "Discover the incredible world of mountains and volcanoes through engaging explanations, stunning visuals, and fascinating geological facts in this premium educational eBook. Perfect for learners and nature lovers. Product type: eBook.",
     category: "eBook",
     price: 15,
     rating: 5,
