@@ -12,10 +12,9 @@ export default function InterceptedProductModal() {
   const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
   const selectedProduct = products.find(p => p.id === params.id);
 
-  const handleBuyNow = (e: React.MouseEvent, product: Product) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleBuyNow = (product: Product) => {
     addToCart(product);
+    router.push("/cart");
   };
 
   const handleClose = () => {
@@ -76,12 +75,7 @@ export default function InterceptedProductModal() {
                 <Check className="w-5 h-5" /> Already Purchased
               </div>
               <button 
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  router.push("/downloads");
-                }}
+                onClick={() => router.push("/downloads")}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all"
               >
                 Go to Downloads
@@ -90,8 +84,7 @@ export default function InterceptedProductModal() {
           ) : (
             <div className="flex flex-col gap-3 mt-6">
               <button 
-                type="button"
-                onClick={(e) => handleBuyNow(e, selectedProduct)}
+                onClick={() => handleBuyNow(selectedProduct)}
                 className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
               >
                 <Zap className="w-5 h-5" /> Buy Now
@@ -99,10 +92,7 @@ export default function InterceptedProductModal() {
               
               <div className="flex gap-3">
                 <button 
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
+                  onClick={() => {
                     if (cartItems.some(p => p.id === selectedProduct.id)) {
                       removeFromCart(selectedProduct.id);
                     } else {
@@ -119,10 +109,7 @@ export default function InterceptedProductModal() {
                 </button>
                 
                 <button 
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
+                  onClick={() => {
                     if (likedItemIds.includes(selectedProduct.id)) {
                       removeFromWishlist(selectedProduct.id);
                     } else {
