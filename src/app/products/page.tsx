@@ -2,212 +2,212 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingCart, Download, Check, Star, Filter, Zap, Shield } from "lucide-react";
-import Link from "next/link";
+import { ShoppingCart, Heart, Zap, X, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
+const TARGET_PRODUCTS = ["secret-of-the-universe", "wonders-of-earth-vol1"];
+
 export default function MarketplacePage() {
-  const { cartItems, purchasedItemIds, addToCart } = useCart();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [sortBy, setSortBy] = useState("Popular");
+  const router = useRouter();
+  const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const categories = ["All", ...Array.from(new Set(products.map(p => p.category)))];
+  const displayedProducts = products.filter(p => TARGET_PRODUCTS.includes(p.id));
 
-  let filteredProducts = products.filter((p) => {
-    const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase()) || p.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const handleToggleCart = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation();
+    if (cartItems.some(p => p.id === product.id)) {
+      removeFromCart(product.id);
+    } else {
+      addToCart(product);
+    }
+  };
 
-  if (sortBy === "Price Low → High") {
-    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
-  } else if (sortBy === "Price High → Low") {
-    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
-  } else if (sortBy === "Newest") {
-    filteredProducts = [...filteredProducts].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  }
+  const handleToggleLike = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation();
+    if (likedItemIds.includes(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product.id);
+    }
+  };
+
+  const handleBuyNow = (product: Product) => {
+    addToCart(product);
+    router.push("/cart");
+  };
 
   return (
     <div className="bg-[#050816] min-h-screen text-white pt-10 pb-24 relative">
-
-
       <div className="container mx-auto px-6 max-w-7xl">
-        
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass mb-4 border border-white/10"
-          >
-            <Star className="w-4 h-4 text-accent" />
-            <span className="text-xs font-medium text-white/90 uppercase tracking-wider">Premium Digital Marketplace</span>
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6"
-          >
-            Discover Our Premium <span className="text-gradient">Digital Products</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-subtext text-lg max-w-2xl mx-auto"
-          >
-            Browse high-quality digital resources designed to help businesses, marketers, entrepreneurs, and creators grow faster.
-          </motion.p>
-        </div>
-
-        {/* Filters & Search */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-md">
-          <div className="relative w-full md:w-96">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
-            <input 
-              type="text" 
-              placeholder="Search products..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-background/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
-            />
-          </div>
-          
-          <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
-            <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-white/50" />
-              <select 
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none cursor-pointer"
-              >
-                {categories.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </div>
-            
-            <select 
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none cursor-pointer"
-            >
-              <option value="Popular">Sort by: Popular</option>
-              <option value="Newest">Newest</option>
-              <option value="Price Low → High">Price: Low to High</option>
-              <option value="Price High → Low">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-
         {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <AnimatePresence>
-            {filteredProducts.map((product, idx) => {
-              const isPurchased = purchasedItemIds.includes(product.id);
-              const inCart = cartItems.some(p => p.id === product.id);
+        <div className="flex flex-wrap justify-center md:justify-start gap-8 mt-12">
+          {displayedProducts.map((product) => {
+            const inCart = cartItems.some(p => p.id === product.id);
+            const isLiked = likedItemIds.includes(product.id);
+            const isPurchased = downloadItemIds.includes(product.id);
 
-              return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  key={product.id}
-                  className="group relative rounded-3xl overflow-hidden glass border border-white/10 flex flex-col hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(110,86,207,0.15)]"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <img loading="lazy" decoding="async" src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] to-transparent opacity-80"></div>
-                    <div className="absolute top-4 left-4 bg-primary/20 backdrop-blur-md border border-primary/50 text-xs px-2 py-1 rounded-md text-primary font-medium">
-                      {product.category}
+            return (
+              <motion.div
+                key={product.id}
+                layoutId={`card-${product.id}`}
+                whileHover={{ y: -5 }}
+                onClick={() => setSelectedProduct(product)}
+                className="group cursor-pointer rounded-3xl overflow-hidden glass border border-white/10 flex flex-col hover:border-primary/50 transition-all duration-300 shadow-lg w-full sm:w-[280px] shrink-0"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <motion.img 
+                    layoutId={`image-${product.id}`}
+                    src={product.image} 
+                    alt={product.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
+                  
+                  {/* Action Icons */}
+                  {!isPurchased && (
+                    <div className="absolute top-4 right-4 flex flex-col gap-2">
+                      <button
+                        onClick={(e) => handleToggleLike(e, product)}
+                        className="p-2 rounded-full glass border border-white/20 bg-black/40 hover:bg-black/60 transition-colors backdrop-blur-md text-white"
+                      >
+                        <Heart className={`w-5 h-5 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} />
+                      </button>
+                      <button
+                        onClick={(e) => handleToggleCart(e, product)}
+                        className={`p-2 rounded-full glass border border-white/20 transition-colors backdrop-blur-md text-white ${inCart ? 'bg-green-500/20 hover:bg-green-500/40 border-green-500/50' : 'bg-black/40 hover:bg-black/60'}`}
+                        title={inCart ? "Remove from Cart" : "Add to Cart"}
+                      >
+                        {inCart ? <Check className="w-5 h-5 text-green-400" /> : <ShoppingCart className="w-5 h-5" />}
+                      </button>
                     </div>
-                    <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md border border-white/10 text-xs px-2 py-1 rounded-md text-white/80">
-                      {product.badge}
-                    </div>
-                  </div>
-
-                  <div className="p-6 flex-grow flex flex-col">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{product.title}</h3>
-                    </div>
-                    <p className="text-subtext text-sm mb-4 line-clamp-2">{product.description}</p>
-                    
-                    <div className="flex items-center justify-between mt-auto mb-6">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                        <span className="text-sm font-medium text-white">{product.rating}</span>
-                        <span className="text-xs text-white/50 ml-1">({product.downloads})</span>
+                  )}
+                  {isPurchased && (
+                    <div className="absolute top-4 right-4">
+                      <div className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                        Purchased
                       </div>
-                      <div className="text-xl font-bold text-white">€{product.price}</div>
                     </div>
+                  )}
+                </div>
 
-                    <div className="grid grid-cols-2 gap-3 mt-auto relative z-20">
-                      {!isPurchased && (
-                        <button 
-                          onClick={() => addToCart(product)}
-                          disabled={inCart}
-                          className={`flex flex-col items-center justify-center py-3 rounded-xl border transition-all ${inCart ? 'bg-white/10 border-white/10 text-white/50 cursor-not-allowed' : 'bg-white/5 border-white/10 hover:bg-white/10 text-white'}`}
-                        >
-                          {inCart ? <Check className="w-5 h-5 mb-1" /> : <ShoppingCart className="w-5 h-5 mb-1" />}
-                          <span className="text-xs font-medium">{inCart ? 'In Cart' : 'Add to Cart'}</span>
-                        </button>
-                      )}
+                <div className="p-6">
+                  <motion.h3 layoutId={`title-${product.id}`} className="text-xl font-bold text-white text-center">
+                    {product.title}
+                  </motion.h3>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Product Details Modal */}
+      <AnimatePresence>
+        {selectedProduct && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProduct(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            
+            <motion.div
+              layoutId={`card-${selectedProduct.id}`}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass border border-white/20 rounded-3xl shadow-2xl flex flex-col md:flex-row z-10 bg-[#0a0f25]"
+            >
+              <button 
+                onClick={() => setSelectedProduct(null)}
+                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 text-white/70 hover:text-white border border-white/10 backdrop-blur-md transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Modal Cover Image */}
+              <div className="w-full md:w-1/2 relative h-64 md:h-auto border-b md:border-b-0 md:border-r border-white/10">
+                <motion.img 
+                  layoutId={`image-${selectedProduct.id}`}
+                  src={selectedProduct.image} 
+                  alt={selectedProduct.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Modal Content */}
+              <div className="w-full md:w-1/2 p-8 flex flex-col justify-between">
+                <div>
+                  <motion.h2 layoutId={`title-${selectedProduct.id}`} className="text-2xl md:text-3xl font-bold font-heading text-white mb-4">
+                    {selectedProduct.title}
+                  </motion.h2>
+                  <p className="text-subtext text-base leading-relaxed mb-6">
+                    {selectedProduct.description}
+                  </p>
+                </div>
+
+                {downloadItemIds.includes(selectedProduct.id) ? (
+                  <div className="flex flex-col gap-3 mt-6">
+                    <div className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-green-500/20 text-green-400 border border-green-500/50 font-bold text-lg">
+                      <Check className="w-5 h-5" /> Already Purchased
+                    </div>
+                    <button 
+                      onClick={() => router.push("/downloads")}
+                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all"
+                    >
+                      Go to Downloads
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3 mt-6">
+                    <button 
+                      onClick={() => handleBuyNow(selectedProduct)}
+                      className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
+                    >
+                      <Zap className="w-5 h-5" /> Buy Now
+                    </button>
+                    
+                    <div className="flex gap-3">
+                      <button 
+                        onClick={() => {
+                          if (cartItems.some(p => p.id === selectedProduct.id)) {
+                            removeFromCart(selectedProduct.id);
+                          } else {
+                            addToCart(selectedProduct);
+                          }
+                        }}
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border font-medium transition-all ${cartItems.some(p => p.id === selectedProduct.id) ? 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`}
+                      >
+                        {cartItems.some(p => p.id === selectedProduct.id) ? (
+                          <><Check className="w-5 h-5" /> In Cart</>
+                        ) : (
+                          <><ShoppingCart className="w-5 h-5" /> Add to Cart</>
+                        )}
+                      </button>
                       
-                      {isPurchased ? (
-                        <Link 
-                          href="/downloads"
-                          className="col-span-2 flex flex-col items-center justify-center py-3 rounded-xl bg-primary/20 border border-primary/50 hover:bg-primary/30 text-white transition-all shadow-[0_0_15px_rgba(110,86,207,0.3)]"
-                        >
-                          <Download className="w-5 h-5 mb-1 text-primary" />
-                          <span className="text-xs font-medium">Already Purchased • Download</span>
-                        </Link>
-                      ) : (
-                        <Link 
-                          href="/cart"
-                          onClick={() => addToCart(product)}
-                          className="flex flex-col items-center justify-center py-3 rounded-xl bg-gradient-to-r from-primary to-accent border border-transparent hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] text-white transition-all"
-                        >
-                          <Zap className="w-5 h-5 mb-1" />
-                          <span className="text-xs font-medium">Buy Now</span>
-                        </Link>
-                      )}
+                      <button 
+                        onClick={() => {
+                          if (likedItemIds.includes(selectedProduct.id)) {
+                            removeFromWishlist(selectedProduct.id);
+                          } else {
+                            addToWishlist(selectedProduct.id);
+                          }
+                        }}
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all"
+                      >
+                        <Heart className={`w-5 h-5 ${likedItemIds.includes(selectedProduct.id) ? 'fill-red-500 text-red-500' : ''}`} /> 
+                        {likedItemIds.includes(selectedProduct.id) ? 'Liked' : 'Like'}
+                      </button>
                     </div>
                   </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </div>
-
-        {filteredProducts.length === 0 && (
-          <div className="text-center py-20 text-white/50">
-            No products found matching your criteria.
+                )}
+              </div>
+            </motion.div>
           </div>
         )}
-
-        {/* Disclaimer Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-24 mb-10 w-full glass rounded-[2rem] border border-white/10 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start shadow-xl relative overflow-hidden"
-        >
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/5 to-white/10"></div>
-          <div className="flex-shrink-0 mt-1 w-14 h-14 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
-            <Shield className="w-7 h-7 text-red-400" />
-          </div>
-          <div className="flex-1 text-left">
-            <h3 className="text-xl font-heading font-bold text-white mb-3">Disclaimer</h3>
-            <p className="text-sm md:text-base text-subtext leading-relaxed">
-              All products available on this store are digital products and will be delivered electronically after successful payment. No physical items will be shipped. Please review the product description carefully before purchasing. Due to the nature of digital products, purchases are generally non-refundable except where required by applicable law. Unauthorized copying, redistribution, resale, or sharing of any purchased content is strictly prohibited.
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      </AnimatePresence>
     </div>
   );
 }

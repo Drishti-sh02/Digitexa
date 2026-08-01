@@ -6,13 +6,13 @@ import { Menu, X, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Heart } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { cartItems } = useCart();
+  const { cartItems, likedItemIds } = useCart();
 
   useEffect(() => {
     let ticking = false;
@@ -77,7 +77,15 @@ export default function Navbar() {
           <Link href="/downloads" className="p-2 text-white/80 hover:text-white transition-colors" title="My Downloads">
             <Download className="w-5 h-5" />
           </Link>
-          <Link href="/cart" className="relative p-2 text-white/80 hover:text-white transition-colors">
+          <Link href="/wishlist" className="relative p-2 text-white/80 hover:text-white transition-colors" title="My Wishlist">
+            <Heart className="w-5 h-5" />
+            {likedItemIds.length > 0 && (
+              <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background">
+                {likedItemIds.length}
+              </span>
+            )}
+          </Link>
+          <Link href="/cart" className="relative p-2 text-white/80 hover:text-white transition-colors" title="My Cart">
             <ShoppingCart className="w-5 h-5" />
             {cartItems.length > 0 && (
               <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white border border-background">
@@ -124,6 +132,14 @@ export default function Navbar() {
             <Link href="/downloads" className="flex items-center justify-between text-sm font-medium text-white/80 hover:text-white transition-colors py-2" onClick={() => setIsMobileMenuOpen(false)}>
               Downloads
               <Download className="w-5 h-5" />
+            </Link>
+            <Link href="/wishlist" className="flex items-center justify-between text-sm font-medium text-white/80 hover:text-white transition-colors py-2" onClick={() => setIsMobileMenuOpen(false)}>
+              Wishlist
+              {likedItemIds.length > 0 && (
+                <span className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold text-white">
+                  {likedItemIds.length}
+                </span>
+              )}
             </Link>
             <Link href="/cart" className="flex items-center justify-between text-sm font-medium text-white/80 hover:text-white transition-colors py-2" onClick={() => setIsMobileMenuOpen(false)}>
               Cart

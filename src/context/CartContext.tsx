@@ -1,18 +1,22 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Product } from "@/data/products";
+import { Product, products } from "@/data/products";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CartContextType {
   cartItems: Product[];
   purchasedItemIds: string[];
   downloadItemIds: string[];
   purchaseDates: Record<string, string>;
+  likedItemIds: string[];
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
   checkout: () => void;
   removeDownload: (productId: string) => void;
+  addToWishlist: (productId: string) => void;
+  removeFromWishlist: (productId: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -22,6 +26,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [purchasedItemIds, setPurchasedItemIds] = useState<string[]>([]);
   const [downloadItemIds, setDownloadItemIds] = useState<string[]>([]);
   const [purchaseDates, setPurchaseDates] = useState<Record<string, string>>({});
+  const [likedItemIds, setLikedItemIds] = useState<string[]>([]);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -29,6 +35,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const storedPurchases = localStorage.getItem("purchasedItemIds");
     const storedDownloads = localStorage.getItem("downloadItemIds");
     const storedPurchaseDates = localStorage.getItem("purchaseDates");
+    const storedLikedItems = localStorage.getItem("likedItemIds");
 
     if (storedCart) setCartItems(JSON.parse(storedCart));
     
@@ -47,6 +54,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     if (storedPurchaseDates) {
       setPurchaseDates(JSON.parse(storedPurchaseDates));
+    }
+    
+    if (storedLikedItems) {
+      setLikedItemIds(JSON.parse(storedLikedItems));
     }
   }, []);
 
@@ -67,14 +78,34 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("purchaseDates", JSON.stringify(purchaseDates));
   }, [purchaseDates]);
 
+  useEffect(() => {
+    localStorage.setItem("likedItemIds", JSON.stringify(likedItemIds));
+  }, [likedItemIds]);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
+  };
+
   const addToCart = (product: Product) => {
     if (!cartItems.find((p) => p.id === product.id) && !purchasedItemIds.includes(product.id)) {
       setCartItems([...cartItems, product]);
+      showToast(`"${product.title}" added to cart!`);
+    } else if (cartItems.find((p) => p.id === product.id)) {
+      showToast(`"${product.title}" is already in your cart`);
+    } else {
+      showToast(`You already purchased "${product.title}"`);
     }
   };
 
   const removeFromCart = (productId: string) => {
     setCartItems(cartItems.filter((p) => p.id !== productId));
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      showToast(`"${product.title}" removed from cart`);
+    }
   };
 
   const clearCart = () => {
@@ -102,6 +133,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setDownloadItemIds(downloadItemIds.filter((id) => id !== productId));
     setPurchasedItemIds(purchasedItemIds.filter((id) => id !== productId));
   };
+  
+  const addToWishlist = (productId: string) => {
+    if (!likedItemIds.includes(productId)) {
+      setLikedItemIds([...likedItemIds, productId]);
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        showToast(`"${product.title}" added to wishlist!`);
+      }
+    } else {
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        showToast(`"${product.title}" is already in your wishlist`);
+      }
+    }
+  };
+
+  const removeFromWishlist = (productId: string) => {
+    setLikedItemIds(likedItemIds.filter(id => id !== productId));
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      showToast(`"${product.title}" removed from wishlist`);
+    }
+  };
 
   return (
     <CartContext.Provider
@@ -110,14 +164,30 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         purchasedItemIds,
         downloadItemIds,
         purchaseDates,
+        likedItemIds,
         addToCart,
         removeFromCart,
         clearCart,
         checkout,
         removeDownload,
+        addToWishlist,
+        removeFromWishlist,
       }}
     >
       {children}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-[100] bg-white text-[#050816] px-6 py-4 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/20 font-bold text-sm md:text-base flex items-center gap-3"
+          >
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+            {toastMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </CartContext.Provider>
   );
 }
