@@ -107,11 +107,26 @@ export const products: Product[] = [
     price: 14,
     rating: 5,
     downloads: "500+",
-    image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop",
+    image: "/TSOU COVER.png",
     badge: "New",
     version: "1.0",
     fileSize: "15 MB",
     createdAt: "2026-07-31T00:00:00Z",
     downloadUrl: "/The_Secret_Of_The_Universe.pdf"
+  },
+  {
+    id: "wonders-of-earth-vol1",
+    title: "Wonders Of Earth: Mountains And Volcanoes",
+    description: "Volume 1: The Giants and the Fire Within. Exploring the planet's greatest natural marvels. Includes a downloadable PDF upon successful payment.",
+    category: "eBook",
+    price: 15,
+    rating: 5,
+    downloads: "0+",
+    image: "/WOE VOLUME 1.png",
+    badge: "New",
+    version: "1.0",
+    fileSize: "2.2 MB",
+    createdAt: "2026-08-01T00:00:00Z",
+    downloadUrl: "/WONDERS_OF_EARTH (VOLUME1).pdf"
   }
 ];
