@@ -49,13 +49,13 @@ export default function MarketplacePage() {
             const isPurchased = downloadItemIds.includes(product.id);
 
             return (
-              <Link key={product.id} href={`/products/${product.id}`} className="block">
+              <Link key={product.id} href={`/products/${product.id}`} className="flex h-full">
                 <motion.div
                   layoutId={`card-${product.id}`}
                   whileHover={{ y: -5 }}
-                  className="group cursor-pointer rounded-3xl overflow-hidden glass border border-white/10 flex flex-col hover:border-primary/50 transition-all duration-300 shadow-lg w-full sm:w-[280px] shrink-0"
+                  className="group cursor-pointer rounded-3xl overflow-hidden glass border border-white/10 flex flex-col hover:border-primary/50 transition-all duration-300 shadow-lg w-full sm:w-[280px] shrink-0 h-full"
                 >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden shrink-0">
                   <motion.img 
                     layoutId={`image-${product.id}`}
                     src={product.image} 

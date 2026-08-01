@@ -49,10 +49,6 @@ export default function DownloadsPage() {
                 >
                   <div className="h-48 overflow-hidden relative">
                     <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] to-transparent"></div>
-                    <div className="absolute top-4 right-4 bg-green-500/20 border border-green-500/50 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 text-xs text-green-400 font-medium">
-                      <ShieldCheck className="w-3 h-3" /> Licensed
-                    </div>
                   </div>
                   
                   <div className="p-6 flex-grow flex flex-col">
