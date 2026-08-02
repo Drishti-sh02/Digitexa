@@ -104,7 +104,7 @@ export const products: Product[] = [
     title: "The Secrets Of The Universe",
     description: "Explore the fascinating mysteries of space, stars, galaxies, black holes, and the origins of the universe in this beautifully designed educational eBook. Perfect for science enthusiasts, students, and curious readers. Product type: eBook.",
     category: "eBook",
-    price: 14,
+    price: 135,
     rating: 5,
     downloads: "500+",
     image: "/TSOU COVER.png",
@@ -119,7 +119,7 @@ export const products: Product[] = [
     title: "Wonders Of Earth: Mountains And Volcanoes",
     description: "Discover the incredible world of mountains and volcanoes through engaging explanations, stunning visuals, and fascinating geological facts in this premium educational eBook. Perfect for learners and nature lovers. Product type: eBook.",
     category: "eBook",
-    price: 15,
+    price: 115,
     rating: 5,
     downloads: "0+",
     image: "/WOE VOLUME 1.png",
@@ -128,5 +128,20 @@ export const products: Product[] = [
     fileSize: "2.2 MB",
     createdAt: "2026-08-01T00:00:00Z",
     downloadUrl: "/WONDERS_OF_EARTH (VOLUME1).pdf"
+  },
+  {
+    id: "future-technologies-ai-vol1",
+    title: "Future Technologies: Artificial Intelligence",
+    description: "Future Technologies is a premium 4-volume eBook series exploring the innovations shaping tomorrow.\n\nVolume I – Artificial Intelligence: Discover how AI is transforming industries, businesses, and everyday life through easy-to-understand explanations and stunning infographics.\n\nComing Next:\n\nVolume II – Blockchain & Web3\nVolume III – Internet of Things & Robotics\nVolume IV – Quantum Computing & Future Innovations\n\nPerfect for students, professionals, and technology enthusiasts who want to understand the future—one innovation at a time.",
+    category: "eBook",
+    price: 120,
+    rating: 5,
+    downloads: "0+",
+    image: "/AI V1 COVER.png",
+    badge: "New",
+    version: "1.0",
+    fileSize: "15 MB",
+    createdAt: "2026-08-02T00:00:00Z",
+    downloadUrl: "/Future technologies volume 1 AI.pdf"
   }
 ];

@@ -57,14 +57,16 @@ export default function InterceptedProductModal() {
         {/* Modal Content */}
         <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-between">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-bold tracking-wider uppercase mb-4">
-              <Book className="w-3.5 h-3.5" />
-              eBook
+            <div className="flex justify-between items-center mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-bold tracking-wider uppercase">
+                <Book className="w-3.5 h-3.5" />
+                eBook
+              </div>
             </div>
             <motion.h2 layoutId={`title-${selectedProduct.id}`} className="text-2xl font-bold font-heading text-white mb-3">
               {selectedProduct.title}
             </motion.h2>
-            <p className="text-subtext text-base leading-relaxed mb-6">
+            <p className="text-subtext text-base leading-relaxed mb-6 whitespace-pre-line">
               {selectedProduct.description}
             </p>
           </div>
@@ -83,12 +85,19 @@ export default function InterceptedProductModal() {
             </div>
           ) : (
             <div className="flex flex-col gap-3 mt-6">
-              <button 
-                onClick={() => handleBuyNow(selectedProduct)}
-                className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
-              >
-                <Zap className="w-5 h-5" /> Buy Now
-              </button>
+              <div className="flex gap-3">
+                <div className="flex-shrink-0 flex items-center justify-center px-5 py-3 rounded-xl bg-white/5 border border-white/10">
+                  <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    €{selectedProduct.price}
+                  </span>
+                </div>
+                <button 
+                  onClick={() => handleBuyNow(selectedProduct)}
+                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
+                >
+                  <Zap className="w-5 h-5" /> Buy Now
+                </button>
+              </div>
               
               <div className="flex gap-3">
                 <button 

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
-const TARGET_PRODUCTS = ["secret-of-the-universe", "wonders-of-earth-vol1"];
+const TARGET_PRODUCTS = ["secret-of-the-universe", "wonders-of-earth-vol1", "future-technologies-ai-vol1"];
 
 export default function MarketplacePage() {
   const router = useRouter();
@@ -99,6 +99,9 @@ export default function MarketplacePage() {
                   <motion.h3 layoutId={`title-${product.id}`} className="text-xl font-bold text-white text-center">
                     {product.title}
                   </motion.h3>
+                  <div className="mt-3 text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    €{product.price}
+                  </div>
                 </div>
                 </motion.div>
               </Link>

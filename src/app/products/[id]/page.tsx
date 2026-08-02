@@ -47,14 +47,16 @@ export default function ProductPage() {
           {/* Content */}
           <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-between">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-bold tracking-wider uppercase mb-4">
-                <Book className="w-3.5 h-3.5" />
-                eBook
+              <div className="flex justify-between items-center mb-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-bold tracking-wider uppercase">
+                  <Book className="w-3.5 h-3.5" />
+                  eBook
+                </div>
               </div>
               <h2 className="text-2xl font-bold font-heading text-white mb-3">
                 {selectedProduct.title}
               </h2>
-              <p className="text-subtext text-lg leading-relaxed mb-8">
+              <p className="text-subtext text-lg leading-relaxed mb-8 whitespace-pre-line">
                 {selectedProduct.description}
               </p>
             </div>
@@ -73,12 +75,19 @@ export default function ProductPage() {
               </div>
             ) : (
               <div className="flex flex-col gap-4 mt-8">
-                <button 
-                  onClick={() => handleBuyNow(selectedProduct)}
-                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-xl hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
-                >
-                  <Zap className="w-6 h-6" /> Buy Now
-                </button>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 flex items-center justify-center px-6 py-4 rounded-xl bg-white/5 border border-white/10">
+                    <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                      €{selectedProduct.price}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={() => handleBuyNow(selectedProduct)}
+                    className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-xl hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
+                  >
+                    <Zap className="w-6 h-6" /> Buy Now
+                  </button>
+                </div>
                 
                 <div className="flex gap-4">
                   <button 
