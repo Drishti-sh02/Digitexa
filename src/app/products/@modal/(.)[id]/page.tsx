@@ -43,7 +43,7 @@ export default function InterceptedProductModal() {
       
       <motion.div
         layoutId={`card-${selectedProduct.id}`}
-        className="relative m-auto w-full max-w-3xl max-h-[90vh] overflow-y-auto glass border border-white/20 rounded-3xl shadow-2xl flex flex-col md:flex-row z-10 bg-[#0a0f25]"
+        className="relative m-auto w-full max-w-3xl max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] glass border border-white/20 rounded-3xl shadow-2xl flex flex-col md:flex-row z-10 bg-[#0a0f25]"
       >
         <button 
           onClick={handleClose}
