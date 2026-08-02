@@ -65,7 +65,7 @@ export default function InterceptedProductModal() {
         </div>
 
         {/* Modal Content */}
-        <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-between overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] min-h-0">
+        <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-between overflow-y-auto min-h-0">
           <div>
             <div className="flex justify-between items-center mb-4">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-bold tracking-wider uppercase">

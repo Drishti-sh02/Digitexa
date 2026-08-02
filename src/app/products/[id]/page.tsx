@@ -26,7 +26,7 @@ export default function ProductPage() {
   const isPurchased = downloadItemIds.includes(selectedProduct.id);
 
   return (
-    <div className="bg-[#050816] min-h-screen text-white pt-24 pb-24 relative flex items-center justify-center">
+    <div className="bg-[#050816] min-h-screen text-white pt-32 pb-24 relative flex items-start justify-center">
       <div className="container mx-auto px-6 max-w-4xl w-full">
         <div className="relative m-auto w-full glass border border-white/20 rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden bg-[#0a0f25] max-w-3xl mx-auto">
           <button 
