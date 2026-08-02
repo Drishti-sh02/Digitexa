@@ -14,9 +14,11 @@ export default function InterceptedProductModal() {
   const selectedProduct = products.find(p => p.id === params.id);
 
   useEffect(() => {
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
     };
   }, []);
 
@@ -32,7 +34,7 @@ export default function InterceptedProductModal() {
   if (!selectedProduct) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overscroll-none">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -43,7 +45,7 @@ export default function InterceptedProductModal() {
       
       <motion.div
         layoutId={`card-${selectedProduct.id}`}
-        className="relative m-auto w-full max-w-3xl max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] glass border border-white/20 rounded-3xl shadow-2xl flex flex-col md:flex-row z-10 bg-[#0a0f25]"
+        className="relative m-auto w-full max-w-3xl max-h-[90vh] glass border border-white/20 rounded-3xl shadow-2xl flex flex-col md:flex-row z-10 bg-[#0a0f25] overflow-hidden"
       >
         <button 
           onClick={handleClose}
@@ -53,7 +55,7 @@ export default function InterceptedProductModal() {
         </button>
 
         {/* Modal Cover Image */}
-        <div className="w-full md:w-5/12 relative h-64 md:h-auto border-b md:border-b-0 md:border-r border-white/10 p-6 flex items-center justify-center bg-black/20">
+        <div className="w-full md:w-5/12 relative h-64 md:h-auto border-b md:border-b-0 md:border-r border-white/10 p-6 flex items-center justify-center bg-black/20 shrink-0">
           <motion.img 
             layoutId={`image-${selectedProduct.id}`}
             src={selectedProduct.image} 
@@ -63,7 +65,7 @@ export default function InterceptedProductModal() {
         </div>
 
         {/* Modal Content */}
-        <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-between">
+        <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-between overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div>
             <div className="flex justify-between items-center mb-4">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 text-xs font-bold tracking-wider uppercase">
