@@ -12,6 +12,7 @@ export interface Product {
   fileSize: string;
   createdAt: string;
   downloadUrl?: string;
+  cardImage?: string;
 }
 
 export const products: Product[] = [
@@ -112,7 +113,8 @@ export const products: Product[] = [
     version: "1.0",
     fileSize: "15 MB",
     createdAt: "2026-07-31T00:00:00Z",
-    downloadUrl: "/The_Secret_Of_The_Universe.pdf"
+    downloadUrl: "/The_Secret_Of_The_Universe.pdf",
+    cardImage: "/TSOU PC.png"
   },
   {
     id: "wonders-of-earth-vol1",
@@ -142,6 +144,7 @@ export const products: Product[] = [
     version: "1.0",
     fileSize: "15 MB",
     createdAt: "2026-08-02T00:00:00Z",
-    downloadUrl: "/Future technologies volume 1 AI.pdf"
+    downloadUrl: "/Future technologies volume 1 AI.pdf",
+    cardImage: "/AI V1 PC.png"
   }
 ];

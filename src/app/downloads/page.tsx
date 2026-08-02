@@ -48,7 +48,7 @@ export default function DownloadsPage() {
                   className="glass rounded-3xl border border-white/10 overflow-hidden flex flex-col relative"
                 >
                   <div className="h-48 overflow-hidden relative">
-                    <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+                    <img src={product.cardImage || product.image} alt={product.title} className="w-full h-full object-cover" />
                   </div>
                   
                   <div className="p-6 flex-grow flex flex-col">

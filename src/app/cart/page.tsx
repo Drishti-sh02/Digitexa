@@ -43,7 +43,7 @@ export default function CartPage() {
                   key={item.id} 
                   className="flex flex-col sm:flex-row gap-6 p-4 glass rounded-2xl border border-white/10 items-center relative pr-12"
                 >
-                  <img src={item.image} alt={item.title} className="w-32 h-24 object-cover rounded-xl" />
+                  <img src={item.cardImage || item.image} alt={item.title} className="w-32 h-24 object-cover rounded-xl" />
                   <div className="flex-grow">
                     <div className="text-xs text-primary mb-1">{item.category}</div>
                     <h3 className="text-lg font-bold mb-1">{item.title}</h3>
