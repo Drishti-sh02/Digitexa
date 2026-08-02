@@ -146,5 +146,21 @@ export const products: Product[] = [
     createdAt: "2026-08-02T00:00:00Z",
     downloadUrl: "/Future technologies volume 1 AI.pdf",
     cardImage: "/AI V1 PC.png"
+  },
+  {
+    id: "future-technologies-blockchain-vol2",
+    title: "Future technologies V2 blockchain",
+    description: "Future Technologies is a premium 4-volume eBook series exploring the innovations shaping tomorrow.\n\nVolume II – Blockchain & Web3: Discover the decentralized digital world through blockchain, cryptocurrencies, smart contracts, NFTs, DeFi, DAOs, and the next generation of the internet.\n\nAll Series:\n\n* Volume II – Blockchain & Web3\n* Volume III – Internet of Things & Robotics\n* Volume IV – Quantum Computing & Future Innovations\n\nPerfect for students, professionals, and technology enthusiasts who want to understand the future—one innovation at a time.",
+    category: "eBook",
+    price: 125,
+    rating: 5,
+    downloads: "0+",
+    image: "/BLOCKCHAIN COVER.jpeg",
+    badge: "New",
+    version: "1.0",
+    fileSize: "15 MB",
+    createdAt: "2026-08-02T00:00:00Z",
+    downloadUrl: "/Future technologies V2 blockchain.pdf",
+    cardImage: "/BLOCKCHAIN PC.png"
   }
 ];

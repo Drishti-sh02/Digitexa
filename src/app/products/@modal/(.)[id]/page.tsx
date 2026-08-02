@@ -5,12 +5,20 @@ import { ShoppingCart, Heart, Zap, X, Check, Book } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useEffect } from "react";
 
 export default function InterceptedProductModal() {
   const router = useRouter();
   const params = useParams();
   const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
   const selectedProduct = products.find(p => p.id === params.id);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   const handleBuyNow = (product: Product) => {
     addToCart(product);
@@ -66,40 +74,40 @@ export default function InterceptedProductModal() {
             <motion.h2 layoutId={`title-${selectedProduct.id}`} className="text-2xl font-bold font-heading text-white mb-3">
               {selectedProduct.title}
             </motion.h2>
-            <p className="text-subtext text-base leading-relaxed mb-6 whitespace-pre-line">
+            <p className="text-subtext text-lg leading-relaxed mb-8 whitespace-pre-line">
               {selectedProduct.description}
             </p>
           </div>
 
           {downloadItemIds.includes(selectedProduct.id) ? (
-            <div className="flex flex-col gap-3 mt-6">
+            <div className="flex flex-col gap-4 mt-8">
               <div className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-green-500/20 text-green-400 border border-green-500/50 font-bold text-lg">
                 <Check className="w-5 h-5" /> Already Purchased
               </div>
               <button 
                 onClick={() => router.push("/downloads")}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all"
+                className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all text-lg"
               >
                 Go to Downloads
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-3 mt-6">
-              <div className="flex gap-3">
-                <div className="flex-shrink-0 flex items-center justify-center px-5 py-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <div className="flex flex-col gap-4 mt-8">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 flex items-center justify-center px-6 py-4 rounded-xl bg-white/5 border border-white/10">
+                  <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                     €{selectedProduct.price}
                   </span>
                 </div>
                 <button 
                   onClick={() => handleBuyNow(selectedProduct)}
-                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-bold text-xl hover:shadow-[0_0_20px_rgba(110,86,207,0.5)] transition-all"
                 >
-                  <Zap className="w-5 h-5" /> Buy Now
+                  <Zap className="w-6 h-6" /> Buy Now
                 </button>
               </div>
               
-              <div className="flex gap-3">
+              <div className="flex gap-4">
                 <button 
                   onClick={() => {
                     if (cartItems.some(p => p.id === selectedProduct.id)) {
@@ -108,7 +116,7 @@ export default function InterceptedProductModal() {
                       addToCart(selectedProduct);
                     }
                   }}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border font-medium transition-all ${cartItems.some(p => p.id === selectedProduct.id) ? 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`}
+                  className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl border font-medium transition-all text-lg ${cartItems.some(p => p.id === selectedProduct.id) ? 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20' : 'bg-white/10 border-white/20 text-white hover:bg-white/20'}`}
                 >
                   {cartItems.some(p => p.id === selectedProduct.id) ? (
                     <><Check className="w-5 h-5" /> In Cart</>
@@ -125,7 +133,7 @@ export default function InterceptedProductModal() {
                       addToWishlist(selectedProduct.id);
                     }
                   }}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-white/10 border border-white/20 text-white font-medium hover:bg-white/20 transition-all text-lg"
                 >
                   <Heart className={`w-5 h-5 ${likedItemIds.includes(selectedProduct.id) ? 'fill-red-500 text-red-500' : ''}`} /> 
                   {likedItemIds.includes(selectedProduct.id) ? 'Liked' : 'Like'}
