@@ -18,9 +18,19 @@ export default function DownloadsPage() {
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
         
         {/* Hero */}
-        <div className="mb-16">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">My <span className="text-gradient">Downloads</span></h1>
-          <p className="text-subtext text-lg max-w-2xl">Access every digital product you've purchased anytime.</p>
+        <div className="mb-16 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">My <span className="text-gradient">Downloads</span></h1>
+            <p className="text-subtext text-lg max-w-2xl">Access every digital product you've purchased anytime.</p>
+          </div>
+          {myDownloads.length > 0 && (
+            <Link 
+              href="/products"
+              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 px-6 py-3 rounded-xl text-white font-medium transition-all shrink-0"
+            >
+              Back to Store
+            </Link>
+          )}
         </div>
 
         {myDownloads.length === 0 ? (

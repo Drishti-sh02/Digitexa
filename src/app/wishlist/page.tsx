@@ -14,9 +14,19 @@ export default function WishlistPage() {
   return (
     <div className="bg-[#050816] min-h-screen text-white pt-10 pb-24 relative">
       <div className="container mx-auto px-6 max-w-6xl">
-        <div className="mb-12">
-          <h1 className="text-4xl font-heading font-bold mb-4">Your Wishlist</h1>
-          <p className="text-subtext">Products you've liked and saved for later.</p>
+        <div className="mb-12 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+          <div>
+            <h1 className="text-4xl font-heading font-bold mb-4">Your Wishlist</h1>
+            <p className="text-subtext">Products you've liked and saved for later.</p>
+          </div>
+          {wishlistProducts.length > 0 && (
+            <Link 
+              href="/products"
+              className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 px-6 py-3 rounded-xl text-white font-medium transition-all shrink-0"
+            >
+              Back to Store
+            </Link>
+          )}
         </div>
 
         {wishlistProducts.length === 0 ? (
