@@ -30,8 +30,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [likedItemIds, setLikedItemIds] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const [isCloudSynced, setIsCloudSynced] = useState(false);
+
+  // Clear data when logged out
+  useEffect(() => {
+    if (!loading && !user) {
+      setCartItems([]);
+      setPurchasedItemIds([]);
+      setDownloadItemIds([]);
+      setPurchaseDates({});
+      setLikedItemIds([]);
+      
+      // Clear localStorage
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("purchasedItemIds");
+      localStorage.removeItem("downloadItemIds");
+      localStorage.removeItem("purchaseDates");
+      localStorage.removeItem("likedItemIds");
+    }
+  }, [user, loading]);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -151,6 +169,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addToCart = (product: Product) => {
+    if (!user) {
+      showToast("Please log in to use the cart");
+      return;
+    }
     if (!cartItems.find((p) => p.id === product.id) && !purchasedItemIds.includes(product.id)) {
       setCartItems([...cartItems, product]);
       showToast(`"${product.title}" added to cart!`);
@@ -174,6 +196,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const checkout = () => {
+    if (!user) return;
     const newPurchaseIds = cartItems.map((p) => p.id);
     const updatedPurchases = Array.from(new Set([...purchasedItemIds, ...newPurchaseIds]));
     const updatedDownloads = Array.from(new Set([...downloadItemIds, ...newPurchaseIds]));
@@ -196,6 +219,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
   
   const addToWishlist = (productId: string) => {
+    if (!user) {
+      showToast("Please log in to use the wishlist");
+      return;
+    }
     if (!likedItemIds.includes(productId)) {
       setLikedItemIds([...likedItemIds, productId]);
       const product = products.find(p => p.id === productId);
