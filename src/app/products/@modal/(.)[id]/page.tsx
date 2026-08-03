@@ -6,7 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useUser } from "@/hooks/useUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function InterceptedProductModal() {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function InterceptedProductModal() {
   const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
   const { user } = useUser();
   const selectedProduct = products.find(p => p.id === params.id);
+  const [showAuthReminder, setShowAuthReminder] = useState(false);
 
   useEffect(() => {
     document.documentElement.style.overflow = "hidden";
@@ -26,7 +27,7 @@ export default function InterceptedProductModal() {
 
   const handleBuyNow = (product: Product) => {
     if (!user) {
-      window.dispatchEvent(new Event("openAuth"));
+      setShowAuthReminder(true);
       return;
     }
     addToCart(product);
@@ -118,6 +119,10 @@ export default function InterceptedProductModal() {
               <div className="flex gap-4">
                 <button 
                   onClick={() => {
+                    if (!user) {
+                      setShowAuthReminder(true);
+                      return;
+                    }
                     if (cartItems.some(p => p.id === selectedProduct.id)) {
                       removeFromCart(selectedProduct.id);
                     } else {
@@ -151,6 +156,57 @@ export default function InterceptedProductModal() {
           )}
         </div>
       </motion.div>
+
+      {/* Auth Reminder Popup */}
+      <AnimatePresence>
+        {showAuthReminder && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAuthReminder(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-sm bg-[#0a0f25] border border-white/20 shadow-2xl rounded-2xl p-8 z-10 flex flex-col items-center text-center"
+            >
+              <button 
+                onClick={() => setShowAuthReminder(false)}
+                className="absolute top-4 right-4 text-white/50 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <div className="w-16 h-16 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-4 border border-primary/50">
+                <Zap className="w-8 h-8" />
+              </div>
+              <h2 className="text-xl font-bold text-white mb-2">Sign In Required</h2>
+              <p className="text-white/70 mb-6">You must sign in or create an account to buy products.</p>
+              <div className="w-full flex flex-col gap-3">
+                <button 
+                  onClick={() => {
+                    setShowAuthReminder(false);
+                    handleClose();
+                    setTimeout(() => window.dispatchEvent(new Event("openAuth")), 100);
+                  }}
+                  className="w-full bg-primary text-white font-medium py-3 rounded-xl hover:bg-primary/90 transition-colors"
+                >
+                  Sign In Now
+                </button>
+                <button 
+                  onClick={() => setShowAuthReminder(false)}
+                  className="w-full bg-white/5 text-white border border-white/10 font-medium py-3 rounded-xl hover:bg-white/10 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
