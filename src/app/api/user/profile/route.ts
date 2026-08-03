@@ -9,9 +9,9 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { fullName, dob } = await req.json();
+    const { fullName, dob, position, company } = await req.json();
 
-    if (!fullName || !dob) {
+    if (!fullName || !dob || !position) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
@@ -20,6 +20,8 @@ export async function PATCH(req: Request) {
       data: {
         fullName,
         dob: new Date(dob),
+        position,
+        company: position === "Employee" ? company : null,
       },
     });
 
