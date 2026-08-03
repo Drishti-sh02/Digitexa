@@ -101,7 +101,7 @@ export default function PrivacyPolicyPage() {
             
             <section>
               <h2 className="text-lg font-bold text-white mb-4">7. Contact Us</h2>
-              <p className="text-subtext">If you have any questions or comments about this notice, you may email us at <strong>digitexatech@gmail.com</strong>.</p>
+              <p className="text-subtext">If you have any questions or comments about this notice, you may email us at <strong>info@digitexa.co.in</strong>.</p>
             </section>
             
           </div>

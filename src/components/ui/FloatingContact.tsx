@@ -30,7 +30,7 @@ export default function FloatingContact() {
     {
       name: "Email",
       icon: <Mail className="w-5 h-5" />,
-      href: "mailto:digitexatech@gmail.com",
+      href: "mailto:info@digitexa.co.in",
       color: "bg-[#6C63FF] hover:bg-[#5a52d5]",
     },
   ];

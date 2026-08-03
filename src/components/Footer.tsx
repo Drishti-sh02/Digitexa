@@ -37,7 +37,7 @@ export default function Footer() {
               <Link href="https://wa.me/919971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <WhatsappIcon />
               </Link>
-              <Link href="mailto:digitexatech@gmail.com" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
+              <Link href="mailto:info@digitexa.co.in" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <Mail size={18} />
               </Link>
               <Link href="tel:+919971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
@@ -97,7 +97,7 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col pt-2">
                   <span className="text-white font-medium text-sm mb-1">Email</span>
-                  <span className="text-subtext text-sm">digitexatech@gmail.com</span>
+                  <span className="text-subtext text-sm">info@digitexa.co.in</span>
                 </div>
               </li>
             </ul>
