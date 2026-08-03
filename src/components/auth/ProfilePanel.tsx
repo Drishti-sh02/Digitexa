@@ -35,6 +35,17 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   const handleDelete = async () => {
     setLoading(true);
     try {
@@ -94,7 +105,7 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-sm h-full bg-background/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col styled-scrollbar overflow-y-auto"
+            className="relative w-full max-w-sm h-full bg-background/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col scrollbar-hide overflow-y-auto"
           >
             <div className="flex items-center justify-between sticky top-0 bg-background/95 p-6 z-20 border-b border-white/5">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
