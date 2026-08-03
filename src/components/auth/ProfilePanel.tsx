@@ -94,9 +94,9 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-sm h-full bg-background/95 backdrop-blur-xl border-l border-white/10 shadow-2xl p-6 flex flex-col styled-scrollbar overflow-y-auto"
+            className="relative w-full max-w-sm h-full bg-background/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col styled-scrollbar overflow-y-auto"
           >
-            <div className="flex items-center justify-between mb-8 sticky top-0 bg-background/95 pb-4 z-10">
+            <div className="flex items-center justify-between sticky top-0 bg-background/95 p-6 z-20 border-b border-white/5">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 Profile
               </h2>
@@ -106,7 +106,7 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
             </div>
 
             {user ? (
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col px-6 pb-6 pt-2">
                 <div className="flex flex-col items-center mb-8 relative">
                   <div className="absolute inset-0 bg-primary/20 blur-[50px] rounded-full -z-10" />
                   {user.profilePicture ? (
@@ -198,7 +198,7 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
                 </div>
               </div>
             ) : (
-              <div className="flex-1 flex items-center justify-center">
+              <div className="flex-1 flex items-center justify-center px-6 pb-6">
                 <p className="text-subtext">Not logged in.</p>
               </div>
             )}
