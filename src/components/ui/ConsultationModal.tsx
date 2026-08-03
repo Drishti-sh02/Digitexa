@@ -66,26 +66,33 @@ export default function ConsultationModal() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
+      setErrors((prev) => ({ ...prev, apiError: "" }));
       
-      const text = `New Consultation Request\n\n` +
-        `Name: ${formState.name}\n` +
-        `Email: ${formState.email}\n` +
-        `Phone: ${formState.phone}\n` +
-        `Company: ${formState.company || 'N/A'}\n` +
-        `Website: ${formState.website || 'N/A'}\n` +
-        `Date: ${formState.date}\n` +
-        `Time: ${formState.time}\n\n` +
-        `Project Details:\n${formState.project}`;
+      try {
+        const response = await fetch("/api/schedule-call", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formState),
+        });
 
-      setTimeout(() => {
+        const data = await response.json();
+
+        if (response.ok) {
+          setIsSuccess(true);
+        } else {
+          setErrors((prev) => ({ ...prev, apiError: data.error || "Failed to schedule call" }));
+        }
+      } catch (error) {
+        setErrors((prev) => ({ ...prev, apiError: "An unexpected error occurred. Please try again." }));
+      } finally {
         setIsSubmitting(false);
-        window.location.href = `mailto:info@digitexa.co.in?subject=${encodeURIComponent('New Consultation Request from ' + formState.name)}&body=${encodeURIComponent(text)}`;
-        setIsSuccess(true);
-      }, 500);
+      }
     }
   };
 
@@ -229,6 +236,12 @@ export default function ConsultationModal() {
                           </span>
                         </label>
                       </div>
+                      
+                      {errors.apiError && (
+                        <div className="text-red-500 text-sm font-medium p-3 bg-red-500/10 border border-red-500/20 rounded-[14px]">
+                          {errors.apiError}
+                        </div>
+                      )}
 
                       <button type="submit" disabled={isSubmitting} className="w-full py-4 rounded-[14px] bg-gradient-to-r from-[#6C63FF] to-[#00D4FF] text-white font-bold text-lg hover:shadow-[0_0_30px_rgba(108,99,255,0.4)] transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                         {isSubmitting ? (

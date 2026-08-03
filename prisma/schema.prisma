@@ -36,3 +36,16 @@ model Session {
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
+
+model CallBooking {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  company   String?
+  website   String?
+  date      String
+  time      String
+  project   String?
+  createdAt DateTime @default(now())
+}
