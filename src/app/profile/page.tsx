@@ -156,24 +156,12 @@ export default function ProfilePage() {
               <LogOut size={16} /> Sign Out
             </button>
 
-            {showDeleteConfirm ? (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 flex flex-col justify-center">
-                <p className="text-red-400 text-[10px] mb-2 text-center font-medium">This action is permanent.</p>
-                <div className="flex gap-2">
-                  <button onClick={() => setShowDeleteConfirm(false)} className="flex-1 bg-white/5 hover:bg-white/10 text-white font-medium py-1.5 rounded-lg text-xs transition-colors border border-white/5">Cancel</button>
-                  <button disabled={loading} onClick={handleDelete} className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-1.5 rounded-lg text-xs transition-colors disabled:opacity-50">
-                    {loading ? <Loader2 size={12} className="animate-spin mx-auto" /> : "Delete"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={() => setShowDeleteConfirm(true)}
-                className="flex items-center justify-center gap-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 font-semibold py-3 rounded-xl transition-colors text-sm"
-              >
-                <Trash2 size={16} /> Delete Account
-              </button>
-            )}
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="flex items-center justify-center gap-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 font-semibold py-3 rounded-xl transition-colors text-sm border border-red-500/10 shadow-sm"
+            >
+              <Trash2 size={16} /> Delete Account
+            </button>
           </div>
         </div>
       </motion.div>
@@ -274,6 +262,51 @@ export default function ProfilePage() {
                     className="flex-1 bg-primary hover:bg-secondary text-white py-3 rounded-xl font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(109,94,247,0.3)]"
                   >
                     {saving ? <Loader2 size={18} className="animate-spin" /> : "Save Changes"}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Delete Confirmation Modal */}
+      <AnimatePresence>
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowDeleteConfirm(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-sm bg-background border border-red-500/20 shadow-2xl rounded-2xl overflow-hidden z-10 p-6"
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center mb-4">
+                  <Trash2 size={24} />
+                </div>
+                <h2 className="text-xl font-bold text-white mb-2">Delete Account</h2>
+                <p className="text-subtext text-sm mb-6">Are you sure you want to delete your account? This action is permanent and cannot be undone.</p>
+                
+                <div className="flex w-full gap-3">
+                  <button 
+                    onClick={() => setShowDeleteConfirm(false)} 
+                    className="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 rounded-xl font-medium transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={handleDelete} 
+                    disabled={loading}
+                    className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+                  >
+                    {loading ? <Loader2 size={18} className="animate-spin" /> : "Delete"}
                   </button>
                 </div>
               </div>

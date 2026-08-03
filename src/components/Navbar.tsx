@@ -103,7 +103,7 @@ export default function Navbar() {
           >
             Get Started
           </Link>
-          {!loading && user ? (
+          {user ? (
             <Link
               href="/profile"
               className="p-2 ml-2 text-white/80 hover:text-white transition-colors bg-white/5 rounded-full border border-white/10"
@@ -111,14 +111,14 @@ export default function Navbar() {
             >
               <UserIcon className="w-5 h-5" />
             </Link>
-          ) : !loading ? (
+          ) : (
             <button
               onClick={() => setIsAuthModalOpen(true)}
               className="ml-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
             >
               Sign Up
             </button>
-          ) : null}
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -176,7 +176,7 @@ export default function Navbar() {
             >
               Get Started
             </Link>
-            {!loading && user ? (
+            {user ? (
               <Link
                 href="/profile"
                 className="mt-2 px-6 py-3 text-center rounded-xl bg-white/10 text-white font-semibold border border-white/10"
@@ -184,7 +184,7 @@ export default function Navbar() {
               >
                 Profile
               </Link>
-            ) : !loading ? (
+            ) : (
               <button
                 onClick={() => {
                   setIsMobileMenuOpen(false);
@@ -194,7 +194,7 @@ export default function Navbar() {
               >
                 Sign Up
               </button>
-            ) : null}
+            )}
           </motion.div>
         )}
       </AnimatePresence>
