@@ -5,11 +5,40 @@ import { Heart, ShoppingCart, Check } from "lucide-react";
 import Link from "next/link";
 import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/hooks/useUser";
+import { Loader2 } from "lucide-react";
 
 export default function WishlistPage() {
   const { likedItemIds, cartItems, addToCart, removeFromWishlist } = useCart();
+  const { user, loading } = useUser();
 
   const wishlistProducts = products.filter(p => likedItemIds.includes(p.id));
+
+  if (loading) {
+    return (
+      <div className="bg-[#050816] min-h-screen pt-32 pb-12 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="bg-[#050816] min-h-screen text-white pt-32 pb-24 relative flex items-center justify-center">
+        <div className="text-center py-16 px-8 glass rounded-3xl border border-white/10 max-w-md w-full mx-4 shadow-2xl">
+          <Heart className="w-16 h-16 text-primary mx-auto mb-6" />
+          <h2 className="text-2xl font-bold mb-4">Sign in required</h2>
+          <p className="text-subtext mb-8">Sign in to see your wishlist.</p>
+          <button 
+            onClick={() => window.dispatchEvent(new Event("openAuth"))}
+            className="inline-flex w-full justify-center items-center gap-2 bg-gradient-to-r from-primary to-accent px-6 py-3 rounded-xl text-white font-medium hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
+          >
+            Sign In Now
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#050816] min-h-screen text-white pt-10 pb-24 relative">
