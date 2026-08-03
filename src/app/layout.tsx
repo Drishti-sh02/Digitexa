@@ -8,6 +8,8 @@ import { ConsultationModalProvider } from "@/context/ConsultationModalContext";
 import ConsultationModal from "@/components/ui/ConsultationModal";
 import { CartProvider } from "@/context/CartContext";
 import FloatingContact from "@/components/ui/FloatingContact";
+import { UserProvider } from "@/hooks/useUser";
+import Providers from "@/components/Providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -51,19 +53,23 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col selection:bg-primary/30 selection:text-white">
-        <CartProvider>
-          <ConsultationModalProvider>
-            <SmoothScroll>
-              <Navbar />
-              <main className="flex-grow pt-24">
-                {children}
-              </main>
-              <Footer />
-              <ConsultationModal />
-              <FloatingContact />
-            </SmoothScroll>
-          </ConsultationModalProvider>
-        </CartProvider>
+        <Providers>
+          <UserProvider>
+          <CartProvider>
+            <ConsultationModalProvider>
+              <SmoothScroll>
+                <Navbar />
+                <main className="flex-grow pt-24">
+                  {children}
+                </main>
+                <Footer />
+                <ConsultationModal />
+                <FloatingContact />
+              </SmoothScroll>
+            </ConsultationModalProvider>
+          </CartProvider>
+        </UserProvider>
+        </Providers>
       </body>
     </html>
   );

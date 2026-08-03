@@ -6,13 +6,19 @@ import { Menu, X, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart, Heart } from "lucide-react";
+import { ShoppingCart, Heart, User as UserIcon } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
+import AuthModal from "./auth/AuthModal";
+import ProfilePanel from "./auth/ProfilePanel";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { cartItems, likedItemIds } = useCart();
+  const { user, loading } = useUser();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isProfilePanelOpen, setIsProfilePanelOpen] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -99,6 +105,22 @@ export default function Navbar() {
           >
             Get Started
           </Link>
+          {!loading && user ? (
+            <button
+              onClick={() => setIsProfilePanelOpen(true)}
+              className="p-2 ml-2 text-white/80 hover:text-white transition-colors bg-white/5 rounded-full border border-white/10"
+              title="Profile"
+            >
+              <UserIcon className="w-5 h-5" />
+            </button>
+          ) : !loading ? (
+            <button
+              onClick={() => setIsAuthModalOpen(true)}
+              className="ml-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
+            >
+              Login / Sign Up
+            </button>
+          ) : null}
         </div>
 
         {/* Mobile Toggle */}
@@ -156,9 +178,33 @@ export default function Navbar() {
             >
               Get Started
             </Link>
+            {!loading && user ? (
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsProfilePanelOpen(true);
+                }}
+                className="mt-2 px-6 py-3 text-center rounded-xl bg-white/10 text-white font-semibold border border-white/10"
+              >
+                Profile
+              </button>
+            ) : !loading ? (
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsAuthModalOpen(true);
+                }}
+                className="mt-2 px-6 py-3 text-center rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold border border-white/10"
+              >
+                Login / Sign Up
+              </button>
+            ) : null}
           </motion.div>
         )}
       </AnimatePresence>
+
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+      <ProfilePanel isOpen={isProfilePanelOpen} onClose={() => setIsProfilePanelOpen(false)} />
     </header>
   );
 }
