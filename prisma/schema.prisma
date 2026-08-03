@@ -17,6 +17,12 @@ model User {
   position       String?  // "Student" or "Employee"
   company        String?  // Optional for Student, required for Employee
   
+  cartItemIds      String[]
+  likedItemIds     String[]
+  downloadItemIds  String[]
+  purchasedItemIds String[]
+  purchaseDates    Json?
+  
   sessions       Session[]
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

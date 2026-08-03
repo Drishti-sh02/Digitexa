@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product, products } from "@/data/products";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "@/hooks/useUser";
 
 interface CartContextType {
   cartItems: Product[];
@@ -28,6 +29,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [purchaseDates, setPurchaseDates] = useState<Record<string, string>>({});
   const [likedItemIds, setLikedItemIds] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  
+  const { user } = useUser();
+  const [isCloudSynced, setIsCloudSynced] = useState(false);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -60,6 +64,63 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setLikedItemIds(JSON.parse(storedLikedItems));
     }
   }, []);
+
+  // Sync down from Cloud when user logs in
+  useEffect(() => {
+    if (user && !isCloudSynced) {
+      fetch("/api/user/sync")
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.syncData) {
+            const sd = data.syncData;
+            // Merge cloud data with local data (unique elements)
+            setCartItems(prev => {
+              const cloudCartIds = sd.cartItemIds || [];
+              const newItems = cloudCartIds
+                .map((id: string) => products.find(p => p.id === id))
+                .filter(Boolean) as Product[];
+              
+              const merged = [...prev];
+              newItems.forEach(item => {
+                if (!merged.find(i => i.id === item.id)) merged.push(item);
+              });
+              return merged;
+            });
+            
+            setPurchasedItemIds(prev => Array.from(new Set([...prev, ...(sd.purchasedItemIds || [])])));
+            setDownloadItemIds(prev => Array.from(new Set([...prev, ...(sd.downloadItemIds || [])])));
+            setLikedItemIds(prev => Array.from(new Set([...prev, ...(sd.likedItemIds || [])])));
+            setPurchaseDates(prev => ({ ...prev, ...(sd.purchaseDates || {}) }));
+            
+            setIsCloudSynced(true);
+          }
+        })
+        .catch(err => console.error("Cloud sync failed:", err));
+    } else if (!user) {
+      setIsCloudSynced(false); // Reset on logout
+    }
+  }, [user, isCloudSynced]);
+
+  // Sync up to Cloud whenever state changes
+  useEffect(() => {
+    if (user && isCloudSynced) {
+      const syncUp = setTimeout(() => {
+        fetch("/api/user/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            cartItemIds: cartItems.map(p => p.id),
+            likedItemIds,
+            downloadItemIds,
+            purchasedItemIds,
+            purchaseDates,
+          })
+        }).catch(err => console.error("Failed to sync up:", err));
+      }, 1000); // Debounce for 1 second
+
+      return () => clearTimeout(syncUp);
+    }
+  }, [cartItems, likedItemIds, downloadItemIds, purchasedItemIds, purchaseDates, user, isCloudSynced]);
 
   // Sync to local storage
   useEffect(() => {
