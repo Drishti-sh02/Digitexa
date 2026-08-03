@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
@@ -24,6 +24,17 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     position: "Student",
     company: "",
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const handleClose = () => {
     setNeedsOnboarding(false);
