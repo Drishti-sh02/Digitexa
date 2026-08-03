@@ -70,13 +70,12 @@ export default function ConsultationModal() {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      
+
       const text = `New Consultation Request\n\n` +
         `Name: ${formState.name}\n` +
         `Email: ${formState.email}\n` +
         `Phone: ${formState.phone}\n` +
         `Company: ${formState.company || 'N/A'}\n` +
-        `Website: ${formState.website || 'N/A'}\n` +
         `Date: ${formState.date}\n` +
         `Time: ${formState.time}\n\n` +
         `Project Details:\n${formState.project}`;
@@ -137,16 +136,16 @@ export default function ConsultationModal() {
           >
             {/* Glowing Border Background (Behind content) */}
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] animate-[spin_4s_linear_infinite] opacity-50" style={{ background: "conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 35%, #6C63FF 50%, #00D4FF 75%, #7F5AF0 100%)" }}></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] animate-[spin_4s_linear_infinite] opacity-50" style={{ background: "conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 35%, #6C63FF 50%, #00D4FF 75%, #7F5AF0 100%)" }}></div>
             </div>
 
             {/* Inner Content Wrapper */}
             <div className="relative z-10 flex flex-col md:flex-row min-h-0 h-full w-full bg-[#070B18]/95 backdrop-blur-3xl m-[2px] rounded-[22px] overflow-hidden" style={{ width: "calc(100% - 4px)", height: "calc(100% - 4px)" }}>
-              
+
               {/* Left Side: Form Area */}
               <div className="flex-1 flex flex-col h-full overflow-y-auto custom-scrollbar p-6 md:p-10">
-                
-                <button 
+
+                <button
                   onClick={closeModal}
                   className="absolute top-6 right-6 md:hidden w-8 h-8 rounded-full glass flex items-center justify-center border border-white/10 z-20"
                 >
@@ -248,7 +247,7 @@ export default function ConsultationModal() {
                     </form>
                   </>
                 ) : (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                     className="flex-1 flex flex-col items-center justify-center text-center py-10"
                   >
@@ -275,13 +274,13 @@ export default function ConsultationModal() {
 
               {/* Right Side: Info Card (Desktop Only) */}
               <div className="hidden md:flex w-[380px] shrink-0 bg-[#0A0F24] relative flex-col border-l border-white/5 overflow-hidden">
-                <button 
+                <button
                   onClick={closeModal}
                   className="absolute top-6 right-6 w-10 h-10 rounded-full glass flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors z-20 cursor-pointer"
                 >
                   <X className="w-5 h-5 text-white" />
                 </button>
-                
+
                 <div className="absolute inset-0 z-0">
                   <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop" alt="Consultation" className="w-full h-full object-cover opacity-20" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F24] via-[#0A0F24]/80 to-transparent"></div>
@@ -308,11 +307,11 @@ export default function ConsultationModal() {
 
                   <div className="mt-12 p-6 glass rounded-2xl border border-white/10 backdrop-blur-md">
                     <div className="flex gap-1 mb-2">
-                      {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />)}
+                      {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />)}
                     </div>
                     <div className="text-white font-bold mb-1">Rated 4.9/5</div>
                     <div className="text-sm text-subtext mb-4">100+ Businesses Served</div>
-                    
+
                     <div className="flex flex-col gap-2 border-t border-white/10 pt-4">
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-subtext">Client Satisfaction</span>

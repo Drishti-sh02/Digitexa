@@ -17,15 +17,61 @@ export default function BillingPage() {
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
   const total = subtotal + (subtotal * 0.05);
 
-  const handleCheckout = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSuccess(true);
-    // Simulate api delay if needed, but we can just show popup instantly
-  };
+  const [isCapturing, setIsCapturing] = useState(false);
 
-  const handleComplete = () => {
-    checkout();
-    router.push("/downloads");
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    const success = urlParams.get("success");
+
+    if (token && success === "true") {
+      setIsCapturing(true);
+      fetch("/api/paypal/capture-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsCapturing(false);
+          if (data.success) {
+            setIsSuccess(true);
+            // Optionally clear the URL query parameters
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } else {
+            alert(data.error || "Payment failed to capture. Please try again or contact support.");
+          }
+        })
+        .catch((err) => {
+          setIsCapturing(false);
+          console.error("Capture error:", err);
+          alert("An error occurred while verifying the payment.");
+        });
+    }
+  }, []);
+
+  const handleCheckout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (cartItems.length === 0) return;
+
+    try {
+      const response = await fetch("/api/paypal/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItems }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || "Failed to initiate PayPal checkout.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to connect to checkout service.");
+    }
   };
 
   if (cartItems.length === 0 && !isSuccess) {
@@ -34,6 +80,18 @@ export default function BillingPage() {
         <div>
           <h2 className="text-3xl font-bold mb-4">No items to checkout</h2>
           <Link href="/products" className="text-primary hover:underline">Return to Marketplace</Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (isCapturing) {
+    return (
+      <div className="bg-[#050816] min-h-screen flex items-center justify-center text-center p-6 text-white">
+        <div>
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+          <h2 className="text-2xl font-bold">Verifying your payment...</h2>
+          <p className="text-subtext mt-2">Please wait, do not close this window.</p>
         </div>
       </div>
     );
@@ -52,67 +110,17 @@ export default function BillingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
             <form onSubmit={handleCheckout} className="space-y-8">
-              {/* Billing Info */}
-              <div className="glass p-8 rounded-3xl border border-white/10">
-                <h3 className="text-2xl font-bold mb-6">Billing Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm text-subtext mb-2">Full Name</label>
-                    <input required type="text" defaultValue={user?.fullName || ""} className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-subtext mb-2">Email Address</label>
-                    <input required type="email" defaultValue={user?.email || ""} className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-subtext mb-2">Phone Number</label>
-                    <input type="tel" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-subtext mb-2">Country</label>
-                    <input required type="text" placeholder="e.g. United States" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none placeholder-white/30" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Payment Method */}
               <div className="glass p-8 rounded-3xl border border-white/10">
                 <h3 className="text-2xl font-bold mb-6">Payment Method</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                  {["Visa", "MasterCard", "PayPal", "Stripe"].map(method => (
-                    <div key={method} className="border border-white/10 rounded-xl p-4 flex items-center justify-center text-sm font-medium hover:bg-white/5 cursor-pointer transition-colors bg-background/30">
-                      {method}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm text-subtext mb-2">Card Number</label>
-                    <div className="relative">
-                      <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
-                      <input required type="text" placeholder="0000 0000 0000 0000" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:border-primary/50 outline-none" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm text-subtext mb-2">Expiry Date</label>
-                      <input required type="text" placeholder="MM/YY" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-subtext mb-2">CVC</label>
-                      <input required type="text" placeholder="123" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
-                    </div>
-                  </div>
-                </div>
+                <p className="text-subtext mb-6">You will be redirected to PayPal to complete your purchase securely.</p>
+                
+                <button
+                  type="submit"
+                  className="w-full flex items-center justify-center gap-3 bg-[#FFC439] text-[#003087] py-4 rounded-xl font-bold text-lg hover:shadow-[0_0_20px_rgba(255,196,57,0.4)] transition-all"
+                >
+                  Pay with PayPal
+                </button>
               </div>
-
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent py-4 rounded-xl text-white font-bold text-lg hover:shadow-[0_0_20px_rgba(110,86,207,0.4)] transition-all"
-              >
-                Complete Purchase <ArrowRight className="w-5 h-5" />
-              </button>
             </form>
           </div>
 
