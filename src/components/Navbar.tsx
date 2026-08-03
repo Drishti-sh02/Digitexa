@@ -116,7 +116,7 @@ export default function Navbar() {
               onClick={() => setIsAuthModalOpen(true)}
               className="ml-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
             >
-              Login / Sign Up
+              Sign Up
             </button>
           ) : null}
         </div>
@@ -192,7 +192,7 @@ export default function Navbar() {
                 }}
                 className="mt-2 px-6 py-3 text-center rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold border border-white/10"
               >
-                Login / Sign Up
+                Sign Up
               </button>
             ) : null}
           </motion.div>
