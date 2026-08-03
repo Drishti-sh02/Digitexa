@@ -11,22 +11,13 @@ export async function DELETE() {
 
     // Delete user from db. Cascade will handle Session/VerificationToken relations if they exist,
     // though VerificationToken doesn't have a direct foreign key. 
-    // We should delete tokens associated with this user's email/phone just in case.
     const user = await db.user.findUnique({ where: { id: session.userId }});
-    if (user) {
-       await db.verificationToken.deleteMany({
-          where: {
-            OR: [
-              { identifier: user.email || "" },
-              { identifier: user.phone || "" }
-            ]
-          }
-       });
-    }
 
-    await db.user.delete({
-      where: { id: session.userId }
-    });
+    if (user) {
+      await db.user.delete({
+        where: { id: session.userId }
+      });
+    }
 
     // Destroy session cookie
     await destroySession();
