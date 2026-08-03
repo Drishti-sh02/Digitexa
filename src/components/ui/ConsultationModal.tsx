@@ -14,9 +14,6 @@ export default function ConsultationModal() {
     phone: "",
     company: "",
     website: "",
-    service: "",
-    industry: "",
-    budget: "",
     date: "",
     time: "",
     project: "",
@@ -60,7 +57,6 @@ export default function ConsultationModal() {
     if (!formState.name) newErrors.name = "Name is required";
     if (!formState.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) newErrors.email = "Valid email is required";
     if (!formState.phone || formState.phone.length < 7) newErrors.phone = "Valid phone is required";
-    if (!formState.service) newErrors.service = "Please select a service";
     if (!formState.date) newErrors.date = "Date is required";
     if (!formState.time) newErrors.time = "Time is required";
     if (!formState.project || formState.project.length < 20) newErrors.project = "Description must be at least 20 characters";
@@ -81,9 +77,6 @@ export default function ConsultationModal() {
         `Phone: ${formState.phone}\n` +
         `Company: ${formState.company || 'N/A'}\n` +
         `Website: ${formState.website || 'N/A'}\n` +
-        `Service: ${formState.service || 'N/A'}\n` +
-        `Industry: ${formState.industry || 'N/A'}\n` +
-        `Budget: ${formState.budget || 'N/A'}\n` +
         `Date: ${formState.date}\n` +
         `Time: ${formState.time}\n\n` +
         `Project Details:\n${formState.project}`;
@@ -100,7 +93,7 @@ export default function ConsultationModal() {
     setIsSuccess(false);
     setFormState({
       name: "", email: "", phone: "", company: "", website: "",
-      service: "", industry: "", budget: "", date: "", time: "",
+      date: "", time: "",
       project: "", agree: false,
     });
     closeModal();
@@ -198,46 +191,7 @@ export default function ConsultationModal() {
                         </div>
                       </div>
 
-                      {/* Dropdowns */}
-                      <div className="grid grid-cols-1 gap-4">
-                        <div className="relative">
-                          <select name="service" value={formState.service} onChange={handleChange} className={`w-full bg-[#0F1322] border ${errors.service ? 'border-red-500' : 'border-white/10'} rounded-[14px] px-4 py-3 text-white/90 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer`}>
-                            <option value="">Service Interested In</option>
-                            <option value="Digital Marketing">Digital Marketing</option>
-                            <option value="Web Development">Web Development</option>
-                            <option value="Shopify Development">Shopify Development</option>
-                            <option value="UI/UX Design">UI/UX Design</option>
-                            <option value="AI Automation">AI Automation</option>
-                            <option value="Branding & Creative">Branding & Creative</option>
-                            <option value="Digital Products">Digital Products</option>
-                            <option value="Not Sure Yet">Not Sure Yet</option>
-                          </select>
-                          <Briefcase className="absolute right-4 top-3.5 w-4 h-4 text-white/40 pointer-events-none" />
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="relative">
-                            <select name="industry" value={formState.industry} onChange={handleChange} className="w-full bg-[#0F1322] border border-white/10 rounded-[14px] px-4 py-3 text-white/90 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer">
-                              <option value="">Industry</option>
-                              <option value="Startup">Startup</option>
-                              <option value="eCommerce">eCommerce</option>
-                              <option value="Technology">Technology</option>
-                              <option value="Other">Other</option>
-                            </select>
-                            <Building2 className="absolute right-4 top-3.5 w-4 h-4 text-white/40 pointer-events-none" />
-                          </div>
-                          <div className="relative">
-                            <select name="budget" value={formState.budget} onChange={handleChange} className="w-full bg-[#0F1322] border border-white/10 rounded-[14px] px-4 py-3 text-white/90 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer">
-                              <option value="">Estimated Budget</option>
-                              <option value="Under $500">Under $500</option>
-                              <option value="$500–$2,000">$500–$2,000</option>
-                              <option value="$2,000–$5,000">$2,000–$5,000</option>
-                              <option value="$5,000+">$5,000+</option>
-                            </select>
-                            <DollarSign className="absolute right-4 top-3.5 w-4 h-4 text-white/40 pointer-events-none" />
-                          </div>
-                        </div>
-                      </div>
+
 
                       {/* Date / Time */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
