@@ -74,6 +74,11 @@ export default function BillingPage() {
     }
   };
 
+  const handleComplete = () => {
+    checkout();
+    router.push("/downloads");
+  };
+
   if (cartItems.length === 0 && !isSuccess) {
     return (
       <div className="bg-[#050816] min-h-screen flex items-center justify-center text-center p-6">
