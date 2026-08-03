@@ -6,10 +6,12 @@ import { CheckCircle2, Lock, CreditCard, ArrowRight, Download } from "lucide-rea
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/hooks/useUser";
 
 export default function BillingPage() {
   const router = useRouter();
   const { cartItems, checkout } = useCart();
+  const { user } = useUser();
   const [isSuccess, setIsSuccess] = useState(false);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
@@ -56,11 +58,11 @@ export default function BillingPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm text-subtext mb-2">Full Name</label>
-                    <input required type="text" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
+                    <input required type="text" defaultValue={user?.fullName || ""} className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
                   </div>
                   <div>
                     <label className="block text-sm text-subtext mb-2">Email Address</label>
-                    <input required type="email" className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
+                    <input required type="email" defaultValue={user?.email || ""} className="w-full bg-background/50 border border-white/10 rounded-xl py-3 px-4 text-white focus:border-primary/50 outline-none" />
                   </div>
                   <div>
                     <label className="block text-sm text-subtext mb-2">Phone Number</label>

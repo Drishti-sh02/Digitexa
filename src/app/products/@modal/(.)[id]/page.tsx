@@ -5,12 +5,14 @@ import { ShoppingCart, Heart, Zap, X, Check, Book } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/hooks/useUser";
 import { useEffect } from "react";
 
 export default function InterceptedProductModal() {
   const router = useRouter();
   const params = useParams();
   const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
+  const { user } = useUser();
   const selectedProduct = products.find(p => p.id === params.id);
 
   useEffect(() => {
@@ -23,6 +25,10 @@ export default function InterceptedProductModal() {
   }, []);
 
   const handleBuyNow = (product: Product) => {
+    if (!user) {
+      window.dispatchEvent(new Event("openAuth"));
+      return;
+    }
     addToCart(product);
     router.push("/cart");
   };

@@ -5,14 +5,20 @@ import { ShoppingCart, Heart, Zap, Check, X, Book } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/hooks/useUser";
 
 export default function ProductPage() {
   const router = useRouter();
   const params = useParams();
   const { cartItems, likedItemIds, downloadItemIds, addToCart, removeFromCart, addToWishlist, removeFromWishlist } = useCart();
+  const { user } = useUser();
   const selectedProduct = products.find(p => p.id === params.id);
 
   const handleBuyNow = (product: Product) => {
+    if (!user) {
+      window.dispatchEvent(new Event("openAuth"));
+      return;
+    }
     addToCart(product);
     router.push("/cart");
   };

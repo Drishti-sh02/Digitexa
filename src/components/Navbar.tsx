@@ -29,8 +29,16 @@ export default function Navbar() {
         ticking = true;
       }
     };
+    
+    const openAuth = () => setIsAuthModalOpen(true);
+    
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("openAuth", openAuth);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("openAuth", openAuth);
+    };
   }, []);
 
   // Hide Navbar on individual blog pages, case studies page, about page, and legal pages
