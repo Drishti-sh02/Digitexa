@@ -6,6 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useUser } from "@/hooks/useUser";
+import { useState } from "react";
 
 export default function ProductPage() {
   const router = useRouter();
