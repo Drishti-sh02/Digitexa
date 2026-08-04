@@ -17,61 +17,43 @@ export default function BillingPage() {
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
   const total = subtotal + (subtotal * 0.05);
 
-  const [isCapturing, setIsCapturing] = useState(false);
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
     const success = urlParams.get("success");
 
-    if (token && success === "true") {
-      setIsCapturing(true);
-      fetch("/api/paypal/capture-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setIsCapturing(false);
-          if (data.success) {
-            setIsSuccess(true);
-            // Optionally clear the URL query parameters
-            window.history.replaceState({}, document.title, window.location.pathname);
-          } else {
-            alert(data.error || "Payment failed to capture. Please try again or contact support.");
-          }
-        })
-        .catch((err) => {
-          setIsCapturing(false);
-          console.error("Capture error:", err);
-          alert("An error occurred while verifying the payment.");
-        });
+    if (success === "true") {
+      setIsSuccess(true);
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
 
-  const handleCheckout = async (e: React.FormEvent) => {
+  const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0) return;
 
-    try {
-      const response = await fetch("/api/paypal/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItems }),
-      });
+    const paypalEmail = process.env.NEXT_PUBLIC_PAYPAL_EMAIL || 'YOUR_PAYPAL_EMAIL_HERE';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    
+    const params = new URLSearchParams({
+      cmd: '_cart',
+      upload: '1',
+      business: paypalEmail,
+      currency_code: 'EUR',
+      return: `${appUrl}/billing?success=true`,
+      cancel_return: `${appUrl}/billing?canceled=true`,
+      rm: '2', 
+    });
 
-      const data = await response.json();
+    cartItems.forEach((item, index) => {
+      params.append(`item_name_${index + 1}`, item.title);
+      params.append(`amount_${index + 1}`, item.price.toString());
+    });
+    
+    const tax = (subtotal * 0.05).toFixed(2);
+    params.append('tax_cart', tax);
 
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert(data.error || "Failed to initiate PayPal checkout.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Failed to connect to checkout service.");
-    }
+    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+    window.location.href = paypalUrl;
   };
 
   const handleComplete = () => {
@@ -90,17 +72,7 @@ export default function BillingPage() {
     );
   }
 
-  if (isCapturing) {
-    return (
-      <div className="bg-[#050816] min-h-screen flex items-center justify-center text-center p-6 text-white">
-        <div>
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-          <h2 className="text-2xl font-bold">Verifying your payment...</h2>
-          <p className="text-subtext mt-2">Please wait, do not close this window.</p>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="bg-[#050816] min-h-screen text-white pt-10 pb-24 relative">
