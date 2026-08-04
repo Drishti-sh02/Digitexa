@@ -105,7 +105,7 @@ export const products: Product[] = [
     title: "The Secrets Of The Universe",
     description: "Explore the fascinating mysteries of space, stars, galaxies, black holes, and the origins of the universe in this beautifully designed educational eBook. Perfect for science enthusiasts, students, and curious readers. Product type: eBook.",
     category: "eBook",
-    price: 90,
+    price: 100,
     rating: 5,
     downloads: "500+",
     image: "/TSOU COVER.png",
@@ -116,21 +116,7 @@ export const products: Product[] = [
     downloadUrl: "/The_Secret_Of_The_Universe.pdf",
     cardImage: "/TSOU PC.png"
   },
-  {
-    id: "wonders-of-earth-vol1",
-    title: "Wonders Of Earth: Mountains And Volcanoes",
-    description: "Discover the incredible world of mountains and volcanoes through engaging explanations, stunning visuals, and fascinating geological facts in this premium educational eBook. Perfect for learners and nature lovers. Product type: eBook.",
-    category: "eBook",
-    price: 100,
-    rating: 5,
-    downloads: "0+",
-    image: "/WOE VOLUME 1.png",
-    badge: "New",
-    version: "1.0",
-    fileSize: "2.2 MB",
-    createdAt: "2026-08-01T00:00:00Z",
-    downloadUrl: "/WONDERS_OF_EARTH (VOLUME1).pdf"
-  },
+
   {
     id: "future-technologies-ai-vol1",
     title: "Future Technologies: Artificial Intelligence",

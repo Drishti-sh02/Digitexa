@@ -8,7 +8,7 @@ import Link from "next/link";
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
-const TARGET_PRODUCTS = ["secret-of-the-universe", "wonders-of-earth-vol1", "future-technologies-ai-vol1", "future-technologies-blockchain-vol2"];
+const TARGET_PRODUCTS = ["secret-of-the-universe", "future-technologies-ai-vol1", "future-technologies-blockchain-vol2"];
 
 export default function MarketplacePage() {
   const router = useRouter();
