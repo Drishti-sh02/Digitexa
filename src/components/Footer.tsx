@@ -40,9 +40,6 @@ export default function Footer() {
               <Link href="mailto:info@digitexa.co.in" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all" title="info@digitexa.co.in">
                 <Mail size={18} />
               </Link>
-              <Link href="mailto:digitech@gmail.com" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all" title="digitech@gmail.com">
-                <Mail size={18} />
-              </Link>
               <Link href="tel:+919971123820" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all">
                 <Phone size={18} />
               </Link>
