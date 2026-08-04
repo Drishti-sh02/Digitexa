@@ -12,8 +12,7 @@ export default function CartPage() {
   const { user, loading } = useUser();
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
-  const tax = subtotal * 0.05; // 5% mock tax
-  const total = subtotal + tax;
+  const total = subtotal;
 
   if (loading) {
     return (
@@ -97,10 +96,7 @@ export default function CartPage() {
                     <span>Subtotal</span>
                     <span className="text-white">€{subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-subtext">
-                    <span>Tax (5%)</span>
-                    <span className="text-white">€{tax.toFixed(2)}</span>
-                  </div>
+
                 </div>
                 
                 <div className="flex justify-between items-center text-xl font-bold border-t border-white/10 pt-6 mb-8">
