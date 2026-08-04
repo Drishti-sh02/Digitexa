@@ -98,9 +98,10 @@ export default function Footer() {
                 <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center shrink-0">
                   <Mail size={18} className="text-primary" />
                 </div>
-                <div className="flex flex-col pt-2">
+                <div className="flex flex-col pt-2 gap-1">
                   <span className="text-white font-medium text-sm mb-1">Email</span>
                   <span className="text-subtext text-sm">info@digitexa.co.in</span>
+                  <span className="text-subtext text-sm">digitech@gmail.com</span>
                 </div>
               </li>
             </ul>
