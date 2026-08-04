@@ -101,16 +101,7 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="glass p-8 rounded-[2rem] border border-white/10 text-center">
-              <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Follow Our Journey</h4>
-              <div className="flex items-center justify-center gap-4">
-                {[Globe, MessageSquare, Share2].map((Icon, idx) => (
-                  <a key={idx} href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(109,94,247,0.4)]">
-                    <Icon className="w-5 h-5 text-white" />
-                  </a>
-                ))}
-              </div>
-            </motion.div>
+
           </motion.div>
 
           {/* Right Column: Form */}
