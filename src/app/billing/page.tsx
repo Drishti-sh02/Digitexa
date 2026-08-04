@@ -107,9 +107,6 @@ export default function BillingPage() {
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="mb-12 text-center md:text-left">
           <h1 className="text-4xl font-heading font-bold mb-4">Secure Checkout</h1>
-          <p className="text-subtext flex items-center justify-center md:justify-start gap-2">
-            <Lock className="w-4 h-4 text-green-400" /> 256-bit SSL Encrypted Payment
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

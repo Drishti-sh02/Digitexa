@@ -74,7 +74,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm text-subtext mb-1">Email Us</p>
-                    <a href="mailto:info@digitexa.co.in" className="text-lg font-medium text-white hover:text-accent transition-colors">info@digitexa.co.in</a>
+                    <a href="mailto:info@digitexa.co.in" className="text-lg font-medium text-white hover:text-accent transition-colors block">info@digitexa.co.in</a>
+                    <a href="mailto:digitech@gmail.com" className="text-lg font-medium text-white hover:text-accent transition-colors block mt-1">digitech@gmail.com</a>
                   </div>
                 </div>
 
