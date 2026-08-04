@@ -15,7 +15,7 @@ export default function BillingPage() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
-  const total = subtotal + (subtotal * 0.05);
+  const total = subtotal;
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -48,9 +48,6 @@ export default function BillingPage() {
       params.append(`item_name_${index + 1}`, item.title);
       params.append(`amount_${index + 1}`, item.price.toString());
     });
-    
-    const tax = (subtotal * 0.05).toFixed(2);
-    params.append('tax_cart', tax);
 
     const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
     window.location.href = paypalUrl;
